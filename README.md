@@ -4,11 +4,151 @@
 
 This document outlines the design and project plan for a proof-of-concept (PoC) oracle system built on the Cardano blockchain to empower smallholder farmers in India. The system integrates earth observation, farm, and market data to facilitate trusted data exchange among farmers, Agri-Entrepreneurs (AEs), buyers, and government agencies. The focus is on the data structure, blockchain interaction, component architecture, technical specifications for the oracle contract, integration strategy, unit testing plan, and scalability measurement criteria.
 
+The solution leverages Cardano blockchain for immutable data storage, Gamma Earth satellite APIs for crop insights, and provides a comprehensive mobile-first experience for agricultural entrepreneurs.
+
+### 1.1 Data Flow Architecture
+- **Authentication Flow**
+    - User enters credentials in mobile app
+    - Backend validates against MongoDB user collection
+    - JWT token issued and stored securely (Keychain/Keystore)
+    - Token used for all subsequent API requests
+
+- **Farmer Registration Flow**
+    - Agent submits farmer data through mobile app
+    - Backend saves farmer record to MongoDB
+    - Cardano transaction created with metadata:
+      ```json
+      {
+        "farmerId": "123",
+        "farmerName": "John Doe",
+        "timestamp": "2025-05-28T10:00:00Z"
+      }
+      ```
+    - Transaction hash stored for audit trail
+
+- **Field Registration Flow**
+  - Agent submits field polygon (GeoJSON format)
+  - MongoDB stores with 2dsphere geospatial indexing
+  - Optional blockchain transaction for field verification
+  - Integration with Gamma Earth API for satellite data
+
+- **Crop Insights Flow**
+  - System queries Gamma Earth API with field coordinates
+  - Receives NDVI data, crop health metrics, and satellite imagery
+  - Data processed and cached in MongoDB
+  - Results displayed in mobile app with visual analytics
+
+
+- **View Registered Farmer Data Flow**
+  - Agent/AE/Catalyst requests a list of registered farmers or fields.
+  - The backend:
+    - Retrieves this data directly from MongoDB.
+    - Returns it to the app for display.
+  - No interaction with the blockchain is required for this operation.
+
+#### 1.1.1 Data Flow Diagram
+
+![DFD](./asset/DFD.png)
+
+#### 1.1.2 High Level Diagram
+
+![HLD](./asset/HLD.png)
+#### 1.1.3 Low Level Diagram
+
+![LLD](./asset/LLD.png)
+
 ---
 
-## 2. Data Structure and Blockchain Interaction
+## 2. User Interface and Backend Design
 
-### 2.1 Oracle Datum Structure
+#### 2.1 Core Objectives
+The system is designed to provide real-time farm metrics stored on-chain using the Cardano blockchain, enabling transparent and immutable agricultural data management for farmers, admins, and agricultural entrepreneurs (AEs).
+
+---
+
+### 2.1.1 Technical Specification
+This section outlines the technical requirements and integration design for the project leveraging the Cardano blockchain.
+- **UI Mockups**
+  - Provided by a dedicated design team.
+  - Will be implemented using **React Native** and **EXPO Framework**.
+  - Follows mobile-first best practices for Agent/AE/Catalyst workflows.
+> UI mockups figma link (added later)
+- **Backend Stack**
+  - Built with **Node.js** and **Express**.
+  - Interacts with the Cardano blockchain using:
+    - **Lucid SDK**
+    - **Mesh SDK** (if needed)
+  - Responsible for:
+    - Authentication
+    - Data processing and validation
+    - Blockchain transaction management
+    - Communication with MongoDB and external APIs
+- **Blockchain Access**
+  - Utilizes **Blockfrost API** to:
+    - Fetch on-chain data
+    - Specifically target OracleDatum from a specified **smart contract address**
+  - Used for verification and visualization of blockchain-anchored metadata.
+- **Data Visualization**
+  - The mobile app decodes and renders specific OracleDatum fields:
+    - `farmArea`
+    - `ipfsHash`
+    - `arbitraryData`
+  - These fields are presented to users in readable formats using charts, cards, or text views in the React Native frontend.
+- **Development Environment**
+  - **VSCode**: Primary code editor for both backend and frontend development.
+  - **Android Emulator**: Used to run and test the React Native app during development.
+- **Deployment Flexibility**
+  - Environment-specific configurations are supported:
+    - `development`
+    - `QA`
+    - `production`
+  - Allows seamless switching of:
+    - API endpoints
+    - Blockchain network settings
+    - Feature toggles or debug flags
+
+## 3. Satellite App API Documentation
+
+| Task                         | Method | Path             | Request (Body / Params)                                                                                                                                                                                            | Response                                                                                                                                                                                                             |
+|------------------------------|--------|-------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **Post Admin**               | POST   | `/admins/`                    | **Body**:<br>```json<br>{<br>  "admin_id": "admin003",<br>  "first_name": "ABC",<br>  "last_name": "DEF",<br>  "email": "aa.ee@example.com",<br>  "phone_number": "9876543210",<br>  "password_hash": "hashedpassword123",<br>  "role": "agent"<br>}<br>```                                                                                                                                                                                                                                           | ```json<br>{<br>  "message": "Admin created successfully",<br>  "admin_id": "admin003"<br>}<br>```                                                                                                                                                                        |
+| **Admin Login**              | POST   | `/admins/login`               | **Body**:<br>```json<br>{<br>  "email": "aa.ee@example.com",<br>  "password": "hashedpassword123"<br>}<br>```                                                                                                                                                                                                                                                                 | ```json<br>{<br>  "message": "Login successful",<br>  "token": "eyJ...YGe4",<br>  "admin": {<br>    "admin_id": "admin003",<br>    "role": "agent",<br>    "email": "aa.ee@example.com",<br>    "first_name": "ABC",<br>    "last_name": "DEF"<br>  }<br>}<br>```                                                                                                                                                              |
+| **Get All Admins**           | GET    | `/admins/`                    | _No body or params_                                                                                                                                                                                                                                                                    | ```json<br>[ {<br>  "_id": "68411a1113feffc7d0ba674f",<br>  "admin_id": "admin003",<br>  "first_name": "ABC",<br>  "last_name": "DEF",<br>  ...<br>} ]<br>```                                                                                                                                                                                                                                                                              |
+| **Get Admin by Id**          | GET    | `/admins/{id}`                | **Param**:<br>`id = 683ed0a4ddd14fd5ef86fe42`                                                                                                                                                                                                                                         | ```json<br>{<br>  "_id": "683ed0a4ddd14fd5ef86fe42",<br>  "admin_id": "admin003",<br>  "first_name": "ABC",<br>  "last_name": "CDE",<br>  ...<br>}<br>```                                                                                                                                                                                                              |
+| **Update Admin**             | PUT    | `/admins/{id}`                | **Param**:<br>`id = 683ecfb3ddd14fd5ef86fe3b`<br>**Body**:<br>```json<br>{<br>  "admin_id": "admin001",<br>  "first_name": "Ravi",<br>  "last_name": "Kumar Show",<br>  "email": "ravi.kumar@example.com",<br>  "phone_number": "9876543210",<br>  "password_hash": "hashedpassword123",<br>  "role": "agent"<br>}<br>```                                                                                                                                                                                                                                         | ```json<br>{<br>  "message": "Admin updated successfully",<br>  "_id": "683ecfb3ddd14fd5ef86fe3b",<br>  "admin_id": "admin001",<br>  "first_name": "Ravi",<br>  ...<br>}<br>```                                                                                                                                                                                                                                                                                                                                                |                                                                                                                                                             |
+| **Post Farmer Details**      | POST   | `/farmers/`                   | **Body**:<br>```json<br>{<br>  "farmer_id": "farmer002",<br>  "first_name": "Roy",<br>  "last_name": "Sada",<br>  "phone_number": "9123456789",<br>  "registor": "68411a1113feffc7d0ba674f"<br>}<br>```                                                                                                                                                                                                                                                                                                                                                   | ```json<br>{<br>  "farmer_id": "farmer002",<br>  "first_name": "Roy",<br>  ...<br>}<br>```                                                                                                                                                                                                 |
+| **Get Farmers by Registor**  | GET    | `/farmers/registor/{regId}`   | **Param**:<br>`regId = 68411a1113feffc7d0ba674f`                                                                                                                                                                                                                                         | ```json<br>[ {<br>  "_id": "684131c1c07d8a2fc6891aa6",<br>  "farmer_id": "farmer002",<br>  "first_name": "Roy",<br>  ...<br>} ]<br>```                                                                                                                                                       |
+| **Get All Farmers**          | GET    | `/farmers/`                   | _No body or params_                                                                                                                                                                                                                                                                       | ```json<br>[ {<br>  "_id": "684131c1c07d8a2fc6891aa6",<br>  "farmer_id": "farmer002",<br>  ...<br>}, { ... } ]<br>```                                                                                                                                                                                                                                                    |
+| **Get Farmer by Id**         | GET    | `/farmers/{id}`               | **Param**:<br>`id = 683ed9b3ab48f2289bcd1662`                                                                                                                                                                                                                                          | ```json<br>{<br>  "_id": "683ed9b3ab48f2289bcd1662",<br>  "farmer_id": "farmer001",<br>  ...<br>}<br>```                                                                                                                                                                                                                                                                |
+| **Update Farmer Details**    | PUT    | `/farmers/{id}`               | **Param**:<br>`id = 683ed9b3ab48f2289bcd1662`<br>**Body**:<br>```json<br>{<br>  "farmer_id": "farmer001",<br>  "first_name": "Sita",<br>  "last_name": "Devi",<br>  "phone_number": "1234567890",<br>  "registor": "60faad9cf6c1f50015c9d456"<br>}<br>```                                                                                                                                                                                                                                                           | ```json<br>{<br>  "_id": "683ed9b3ab48f2289bcd1662",<br>  "farmer_id": "farmer001",<br>  ...<br>}<br>```                                                                                                                                                                                                                                            |
+| **Post Field**               | POST   | `/fields/`                    | **Body**:<br>```json<br>{<br>  "field_id": "field789",<br>  "farmer_id": "64abd1234ef5a67b89011234",<br>  "field_name": "North Plot",<br>  "field_location": { "type":"Polygon","coordinates":[[ [20.1,35.1],[20.2,35.1],[20.2,35.2],[20.1,35.2],[20.1,35.1] ]] }<br>}<br>``` | ```json<br>{<br>  "field_id": "field7893",<br>  "farmer_id": "64abd1234ef5a67b89011234",<br>  ...<br>}<br>```                                                                                                                                                                                                                                                            |
+| **Get All Fields**           | GET    | `/fields/`                    | _No body or params_                                                                                                                                                                                               | ```json<br>[ { ... }, { ... } ]<br>```                                                                                                                                                                                                                                                           |
+| **Get Field by Id**          | GET    | `/fields/{id}`                | **Param**:<br>`id = 683edd3e082c56add9fe443a`                                                                                                                                                                                                                                          | ```json<br>{<br>  "_id": "683edd3e082c56add9fe443a",<br>  "field_id": "field789",<br>  ...<br>}<br>```                                                                                                                                                                                       |
+| **Update Field Details**     | PUT    | `/fields/{id}`                | **Param**:<br>`id = 683edd3e082c56add9fe443a`<br>**Body**: same as GET response                                                                                                                                                                                                                | ```json<br>{<br>  "_id": "683edd3e082c56add9fe443a",<br>  "field_id": "field789",<br>  ...<br>}<br>```                                                                                                              |                                                                                                                                                                                                                                 |
+| **Post Crop Data**           | POST   | `/cropData/`                  | **Body**:<br>```json<br>{<br>  "field_id": "64abe5678cd4f90ab1234567",<br>  "cropInformation": { "kharif":[{...}], "rabi":[], "zaid":[] },<br>  "soilTesting": {...},<br>  "ndvi_index":[{...}],<br>  "soil_moisture":[{...}],<br>  "crop_health_classification":[{...}],<br>  "source":"Satellite"<br>}<br>``` | ```json<br>{<br>  "_id": "68415f0cd0247f709dac29a5",<br>  "field_id": "683edd3e082c56add9fe443a",<br>  ...<br>}<br>```                                                                                                                                                                                                                                                  |
+| **Get All Crop Data**        | GET    | `/cropData/`                  | _No body or params_                                                                                                                                                                                                                                                                  | ```json<br>[ { ... } ]<br>```                                                                                                                                                                                                                                                              |
+| **Get Crop Data by Id**      | GET    | `/cropData/{id}`              | **Param**:<br>`id = 683ede84082c56add9fe4440`                                                                                                                                                                                                                                           | ```json<br>{<br>  "_id": "683ede84082c56add9fe4440",<br>  "field_id": "64abe5678cd4f90ab1234567",<br>  ...<br>}<br>```                                                                                                                                                                          |
+| **Update Crop Data by Id**   | PUT    | `/cropData/{id}`              | **Param**:<br>`id = 683ede84082c56add9fe4440`<br>**Body**: same as POST response                                                                                                                                                                                                               | ```json<br>{<br>  "_id": "683ede84082c56add9fe4440",<br>  "cropInformation":{...},<br>  ...<br>}<br>```                                                                                                                                                                                                                                     |
+
+
+
+## 4. Data Structure and Blockchain Interaction
+
+#### 4.1 Key Components
+| Component         | Technology                  | Purpose                                                  |
+|------------------|-----------------------------|----------------------------------------------------------|
+| Mobile Frontend   | React Native + Expo         | User interface for data entry and visualization         |
+| Backend API       | Node.js + Express           | Business logic and blockchain integration               |
+| Database          | MongoDB                     | Application data storage with geospatial indexing       |
+| Blockchain        | Cardano + Blockfrost API    | Immutable data verification and audit trail             |
+| Satellite Data    | Gamma Earth API             | Real-time crop health and NDVI analytics                |
+
+#### 4.1.1 User Ecosystem
+- **Agents/AEs/Catalysts**: Register farmers and manage field data  
+- **Farmers**: Benefit from crop insights and blockchain-verified records  
+- **System Administrators**: Monitor and maintain the platform  
+
+### 4.2 Oracle Datum Structure
 
 The oracle datum is a critical component stored on-chain to represent farm-related data. It is designed to be lightweight, extensible, and interoperable with Cardano's Plutus smart contracts.
 
@@ -16,7 +156,7 @@ The oracle datum is a critical component stored on-chain to represent farm-relat
 
 1. **Farm Land Area** (`Integer`):
    - Represents the area of the farm in square yards.
-   - Stored as a 64-bit integer to accommodate large farm sizes while maintaining efficiency.
+   - Stored as a 64-bit integer to accommodate large farm sizes while maintaining efficiency.- **
    - Example: `5000` (for 5000 square yards).
 2. **IPFS Hash for Farm Borders** (`ByteString`):
    - A 46-byte IPFS hash linking to a JSON file containing geospatial coordinates (latitude/longitude points) defining the farm's boundaries.
@@ -61,7 +201,7 @@ data CropInfo =
    }
 ```
 
-### 2.2 Blockchain Interaction
+### 4.3 Blockchain Interaction
 
 To ensure maximum usability, the system supports two oracle architectures on Cardano: **Reference UTxO Oracle Architecture** and **Signed Message Oracle Architecture**. Each has distinct trade-offs, balancing data availability, permissionless access, and operational efficiency.
 
@@ -147,194 +287,8 @@ Smart contract protocols can consume these messages as follows:
 
 This architecture complements the Reference UTxO Oracle architecture by serving use cases that demand real-time updates or when cost sensitivity outweighs on-chain persistence.
 
----
-
-## 3. Unit Testing Plan
-
-To ensure the correctness, reliability, and upgradability of the oracle system, a comprehensive unit testing strategy is defined across all smart contract components, datum structures, and integration workflows. The testing plan is divided into three primary layers: Datum validation, Script validation, and Integration tests.
-
-### 3.1 Datum Integrity Tests
-
-Unit tests will focus on serialization, schema integrity, and forward compatibility of the `OracleDatum` and any embedded custom data types (e.g., `CropInfo`).
-
-**Test Cases:**
-
-- **Signed Message Structural Integrity:**
-  - Validate oracle datum message: `serialiseData oracleDatum <> integerToByteString validityStart <> integerToByteString validityEnd ≡ oracleDatumMessage` for valid `oracleDatum :: OracleDatum`.
-
-- **Precision Integrity:**
-  - Verify that farm areas represented with decimal-like scaling (e.g., `500 * 1_000_000`) maintain expected interpretation on-chain over common arithmetic operations.
-
-- **Arbitrary Data Robustness:**
-  - Fuzz test `arbitraryData` field with:
-    - Valid known schema (e.g., correct `CropInfo`)
-    - Unexpected but Plutus-compatible structures
-    - Edge cases (empty maps, deeply nested structures, large byte strings)
-
-- **Boundary Validation:**
-  - Maximum field lengths for `ipfsHash`
-  - Minimum and maximum land area edge cases (0, 1, 2^63-1)
-
-### 3.2 Script Unit Tests
-
-All Plutus validator and minting policy scripts will undergo isolated scenario-based testing.
-
-**Oracle Management Validator:**
-
-- **Positive Tests:**
-  - Authorized oracle provider updates a datum with valid structure and preserves reference-token.
-  - Continuity of UTxO validated (same asset class, correct script address).
-
-- **Negative Tests:**
-  - Unauthorized key attempts to spend an oracle UTxO.
-  - Output datum is malformed or missing required fields.
-  - Reference-token is removed, burned, or incorrectly transferred.
-
-**DID NFT Minting Policy:**
-
-- **Positive Tests:**
-  - Correct issuance by `issuanceOperator` with matching user and reference-token minted.
-  - Oracle UTxO correctly initialized with reference-token and valid datum.
-
-- **Negative Tests:**
-  - Attempt to mint without operator signature.
-  - Minting multiple user-tokens or reference-tokens.
-  - Oracle output not created, contains structurally invalid oracle datum, or does not contain the minted reference-token.
-
-**Signed Message Validation (for consuming contracts):**
-
-- **Positive Tests:**
-  - Valid signature over CBOR-encoded oracle data with correct public key and valid timestamp window.
-
-- **Negative Tests:**
-  - Invalid signature.
-  - Timestamps outside acceptable validity window.
-  - Message tampering (mismatched data and signature).
-
----
-
-## 4. A Preliminary Design of the User Interface and API
-
-### 4.1 Section Overview
-This document section outlines the technical architecture and implementation strategy for a blockchain-integrated agricultural data management system. The solution leverages Cardano blockchain for immutable data storage, Gamma Earth satellite APIs for crop insights, and provides a comprehensive mobile-first experience for agricultural entrepreneurs.
-
----
-
-### 4.2 System Overview
-#### 4.2.1 Core Objectives
-The system is designed to provide real-time farm metrics stored on-chain using the Cardano blockchain, enabling transparent and immutable agricultural data management for farmers, admins, and agricultural entrepreneurs (AEs).
-#### 4.2.1 Key Components
-| Component         | Technology                  | Purpose                                                  |
-|------------------|-----------------------------|----------------------------------------------------------|
-| Mobile Frontend   | React Native + Expo         | User interface for data entry and visualization         |
-| Backend API       | Node.js + Express           | Business logic and blockchain integration               |
-| Database          | MongoDB                     | Application data storage with geospatial indexing       |
-| Blockchain        | Cardano + Blockfrost API    | Immutable data verification and audit trail             |
-| Satellite Data    | Gamma Earth API             | Real-time crop health and NDVI analytics                |
-
-#### 4.2.3 User Ecosystem
-- **Agents/AEs/Catalysts**: Register farmers and manage field data  
-- **Farmers**: Benefit from crop insights and blockchain-verified records  
-- **System Administrators**: Monitor and maintain the platform  
-
----
-
-### 4.3 System Architecture
-#### 4.3.1 Data Flow Architecture
-- **Authentication Flow**
-    - User enters credentials in mobile app
-    - Backend validates against MongoDB user collection
-    - JWT token issued and stored securely (Keychain/Keystore)
-    - Token used for all subsequent API requests
-
-- **Farmer Registration Flow**
-    - Agent submits farmer data through mobile app
-    - Backend saves farmer record to MongoDB
-    - Cardano transaction created with metadata:
-      ```json
-      {
-        "farmerId": "123",
-        "farmerName": "John Doe",
-        "timestamp": "2025-05-28T10:00:00Z"
-      }
-      ```
-    - Transaction hash stored for audit trail
-
-- **Field Registration Flow**
-  - Agent submits field polygon (GeoJSON format)
-  - MongoDB stores with 2dsphere geospatial indexing
-  - Optional blockchain transaction for field verification
-  - Integration with Gamma Earth API for satellite data
-
-- **Crop Insights Flow**
-  - System queries Gamma Earth API with field coordinates
-  - Receives NDVI data, crop health metrics, and satellite imagery
-  - Data processed and cached in MongoDB
-  - Results displayed in mobile app with visual analytics
-
-
-- **View Registered Farmer Data Flow**
-  - Agent/AE/Catalyst requests a list of registered farmers or fields.
-  - The backend:
-    - Retrieves this data directly from MongoDB.
-    - Returns it to the app for display.
-  - No interaction with the blockchain is required for this operation.
-
-- **Data Flow Diagram**
-
-![DFD](./asset/DFD.png)
-
-#### 4.3.2 High Level Diagram
-
-![HLD](./asset/HLD.png)
-#### 4.3.3 Low Level Diagram
-
-![LLD](./asset/LLD.png)
----
-### 4.4 Technical Specification
-This section outlines the technical requirements and integration design for the project leveraging the Cardano blockchain.
-- **UI Mockups**
-  - Provided by a dedicated design team.
-  - Will be implemented using **React Native** and **EXPO Framework**.
-  - Follows mobile-first best practices for Agent/AE/Catalyst workflows.
-> UI mockups figma link (added later)
-- **Backend Stack**
-  - Built with **Node.js** and **Express**.
-  - Interacts with the Cardano blockchain using:
-    - **Lucid SDK**
-    - **Mesh SDK** (if needed)
-  - Responsible for:
-    - Authentication
-    - Data processing and validation
-    - Blockchain transaction management
-    - Communication with MongoDB and external APIs
-- **Blockchain Access**
-  - Utilizes **Blockfrost API** to:
-    - Fetch on-chain data
-    - Specifically target OracleDatum from a specified **smart contract address**
-  - Used for verification and visualization of blockchain-anchored metadata.
-- **Data Visualization**
-  - The mobile app decodes and renders specific OracleDatum fields:
-    - `farmArea`
-    - `ipfsHash`
-    - `arbitraryData`
-  - These fields are presented to users in readable formats using charts, cards, or text views in the React Native frontend.
-- **Development Environment**
-  - **VSCode**: Primary code editor for both backend and frontend development.
-  - **Android Emulator**: Used to run and test the React Native app during development.
-- **Deployment Flexibility**
-  - Environment-specific configurations are supported:
-    - `development`
-    - `QA`
-    - `production`
-  - Allows seamless switching of:
-    - API endpoints
-    - Blockchain network settings
-    - Feature toggles or debug flags
-
----
-### 4.5 Integration Strategy with PoC Oracle (Preliminary)
-#### 4.5.1 Oracle Data Structure
+### 4.4 Integration Strategy with PoC Oracle
+#### 4.4.1 Oracle Data Structure
 The Cardano smart contract utilizes the following OracleDatum structure:
 ```haskell
 data OracleDatum = OracleDatum
@@ -372,8 +326,11 @@ const lucid = await Lucid.new(
 | `/api/oracle/history/:address` | GET  | Historical oracle data              | Array of timestamped entries      |
 | `/api/oracle/verify/:txHash` | GET    | Verify specific transaction         | Verification status               |
 
-#### 4.5.4 Gamma Earth Satellite Integration
-##### 4.5.4.1 S2DR3 RISC API – Version 0.2
+
+---
+
+## 5. Gamma Earth Satellite Integration
+### 5.1 S2DR3 RISC API – Version 0.2
 >**Important:** The API is asynchronous.
 A POST request launches the processing job and immediately returns metadata.
 The actual processed imagery appears in the corresponding GCP bucket a few minutes later.
@@ -447,7 +404,46 @@ PID = "T35UQR-860014671-20230810"
 MGRS = "T35UQR"
 SID = "860014671"
 ```
-##### 4.5.4.2 Application Implementation
+**D. Download Raw GeoTIFFs with wget**
+
+- **IRP Image Request Example:**
+```curl 
+wget https://sentinel-s2dr3.s3.eu-central-1.amazonaws.com/PL/T34UDV/T34UDV-20240501-ucc1a562/S2L2Ax10_T34UDV-20240501-ucc1a562_IRP.tif
+```
+- **Response Example:**
+```curl
+--2025-05-30 13:44:46--  https://sentinel-s2dr3.s3.eu-central-1.amazonaws.com/PL/T34UDV/T34UDV-20240501-ucc1a562/S2L2Ax10_T34UDV-20240501-ucc1a562_IRP.tif
+Resolving sentinel-s2dr3.s3.eu-central-1.amazonaws.com... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 22504275 (21M) [binary/octet-stream]
+Saving to: 'S2L2Ax10_T34UDV-20240501-ucc1a562_IRP.tif'
+
+100%[======================================>] 21.46M  19.7MB/s   in 1.1s
+
+2025-05-30 13:44:48 (19.7 MB/s) - 'S2L2Ax10_T34UDV-20240501-ucc1a562_IRP.tif' saved [22504275/22504275]
+```
+- **TCI Image Request Example:**
+```curl 
+!wget https://storage.googleapis.com/sentinel-s2dr3/PL/T34UDV/T34UDV-84632e954/S2L2Ax10_T34UDV-84632e954-20230502_TCI.tif
+```
+- **Response Example:**
+```curl
+--2025-05-30 13:44:46-- https://sentinel-s2dr3.s3.eu-central-1.amazonaws.com/PL/T34UDV/T34UDV-20240501-ucc1a562/S2L2Ax10_T3
+Resolving sentinel-s2dr3.s3.eu-central-1.amazonaws.com (sentinel-s2dr3.s3.eu-central-1.amazonaws.com)... 3.5.136.188, 3.5.13
+Connecting to sentinel-s2dr3.s3.eu-central-1.amazonaws.com (sentinel-s2dr3.s3.eu-central-1.amazonaws.com)|3.5.136.188|:443..
+HTTP request sent, awaiting response... 200 OK
+Length: 22504275 (21M) [binary/octet-stream]
+Saving to: ‘S2L2Ax10_T34UDV-20240501-ucc1a562_IRP.tif’
+S2L2Ax10_T34UDV-202 100%[===================>] 21.46M 19.7MB/s
+in 1.1s
+2025-05-30 13:44:48 (19.7 MB/s) - ‘S2L2Ax10_T34UDV-20240501-ucc1a562_IRP.tif’ saved [22504275/22504275]
+
+100%[======================================>] 21.46M  19.7MB/s   in 1.1s
+
+2025-05-30 13:44:48 (19.7 MB/s) - 'S2L2Ax10_T34UDV-20240501-ucc1a562_IRP.tif' saved [22504275/22504275]
+```
+
+##### 5.2 Application Implementation
 To interact with the `S2DR3 RISC API` in React Native and render `.tif`(GeoTIFF) satellite imagery using something like geotiff.js, we need to:
 
 **A. Submit a Job (React Native API Call)**
@@ -503,8 +499,72 @@ export async function getJobStatus(userId: string, jobId: string) {
   
 ---
 
-### 4.6 Application Unit Testing Plan 
-#### 4.6.1 Backend Testing Framework
+
+## 6. Unit Testing Plan
+
+To ensure the correctness, reliability, and upgradability of the oracle system, a comprehensive unit testing strategy is defined across all smart contract components, datum structures, and integration workflows. The testing plan is divided into three primary layers: Datum validation, Script validation, and Integration tests.
+
+### 6.1 Datum Integrity Tests
+
+Unit tests will focus on serialization, schema integrity, and forward compatibility of the `OracleDatum` and any embedded custom data types (e.g., `CropInfo`).
+
+**Test Cases:**
+
+- **Signed Message Structural Integrity:**
+  - Validate oracle datum message: `serialiseData oracleDatum <> integerToByteString validityStart <> integerToByteString validityEnd ≡ oracleDatumMessage` for valid `oracleDatum :: OracleDatum`.
+
+- **Precision Integrity:**
+  - Verify that farm areas represented with decimal-like scaling (e.g., `500 * 1_000_000`) maintain expected interpretation on-chain over common arithmetic operations.
+
+- **Arbitrary Data Robustness:**
+  - Fuzz test `arbitraryData` field with:
+    - Valid known schema (e.g., correct `CropInfo`)
+    - Unexpected but Plutus-compatible structures
+    - Edge cases (empty maps, deeply nested structures, large byte strings)
+
+- **Boundary Validation:**
+  - Maximum field lengths for `ipfsHash`
+  - Minimum and maximum land area edge cases (0, 1, 2^63-1)
+
+### 6.2 Script Unit Tests
+
+All Plutus validator and minting policy scripts will undergo isolated scenario-based testing.
+
+**Oracle Management Validator:**
+
+- **Positive Tests:**
+  - Authorized oracle provider updates a datum with valid structure and preserves reference-token.
+  - Continuity of UTxO validated (same asset class, correct script address).
+
+- **Negative Tests:**
+  - Unauthorized key attempts to spend an oracle UTxO.
+  - Output datum is malformed or missing required fields.
+  - Reference-token is removed, burned, or incorrectly transferred.
+
+**DID NFT Minting Policy:**
+
+- **Positive Tests:**
+  - Correct issuance by `issuanceOperator` with matching user and reference-token minted.
+  - Oracle UTxO correctly initialized with reference-token and valid datum.
+
+- **Negative Tests:**
+  - Attempt to mint without operator signature.
+  - Minting multiple user-tokens or reference-tokens.
+  - Oracle output not created, contains structurally invalid oracle datum, or does not contain the minted reference-token.
+
+**Signed Message Validation (for consuming contracts):**
+
+- **Positive Tests:**
+  - Valid signature over CBOR-encoded oracle data with correct public key and valid timestamp window.
+
+- **Negative Tests:**
+  - Invalid signature.
+  - Timestamps outside acceptable validity window.
+  - Message tampering (mismatched data and signature).
+
+
+### 6.3 Application Unit Testing Plan 
+#### 6.3.1 Backend Testing Framework
 ##### Testing Stack
 - **Framework:** Jest
 - **Mocking:** Jest mocks
@@ -584,9 +644,9 @@ describe('FarmCard Component', () => {
 ```
 ---
 
-### 4.7 Security Testing Approach
+### 6.4 Security Testing Approach
 
-#### 4.7.1 Backend Security Measures
+#### 6.4.1 Backend Security Measures
 
 - **Authentication & Authorization**
 
@@ -628,7 +688,7 @@ const validateCardanoAddress = (address) => {
 };
 
 ```
-#### 4.7.2 Security Testing Checklist
+#### 6.4.2 Security Testing Checklist
 
 **API Security Tests**
 - [ ] Input Validation: SQL injection, XSS, command injection
@@ -649,8 +709,10 @@ const validateCardanoAddress = (address) => {
 - [ ] Private Key Management: Secure key storage
 - [ ] Smart Contract Interaction: Parameter validation
 
-#### 4.7.3 Frontend Security Measures
-**Secure Storage Implementation**
+---
+
+## 7. Frontend Security Measures
+### 7.1 **Secure Storage Implementation**
 ```javascript
 import * as SecureStore from 'expo-secure-store';
 
@@ -677,7 +739,7 @@ const getToken = async () => {
 };
 
 ```
-#### 4.7.4 Network Security
+### 7.2 **Network Security**
 ```javascript
 // HTTPS enforcement
 const API_BASE_URL = __DEV__ 
@@ -696,8 +758,8 @@ const secureAxios = axios.create({
 ```
 ---
 
-### 4.8 Scalability Measurement Criteria
-#### 4.8.1 Performance & Memory Optimizations (React Native)
+## 8 Scalability Measurement Criteria
+### 8.1 Performance & Memory Optimizations (React Native)
 To ensure smooth performance and efficient memory usage in the React Native mobile application, the following best practices are implemented:
 
 - **Efficient List Rendering**
@@ -756,12 +818,12 @@ Together, these techniques ensure smooth UI (60 FPS) and low memory usage even a
 
 ---
 
-### 4.9 Deployment Plan
+## 9 Deployment Plan
 
-#### 4.9.1 Deployment Overview
+### 9.1 Deployment Overview
 This deployment plan outlines the steps and strategies to deliver and maintain the mobile application across development, staging, and production environments. The mobile frontend is built using **React Native with Expo**, while the backend uses **Node.js with Express**. Data is managed via **MongoDB** and **PostgreSQL**. A future enhancement will enable integration with a parent app via **Single Sign-On (SSO)**.
 
-#### 4.9.2 Deployment Environments
+### 9.2 Deployment Environments
 - **Development Environment**
   - **Purpose**: Internal testing and rapid development.
   - **Deployment**: Local Expo CLI / Expo Go + Docker-based local backend.
@@ -773,7 +835,7 @@ This deployment plan outlines the steps and strategies to deliver and maintain t
     - **Backend**: Node.js hosted on a cloud provider (e.g., AWS)
     - **Database**: Managed services (MongoDB)
 
-#### 4.9.3 Frontend Deployment (React Native + Expo)
+### 9.3 Frontend Deployment (React Native + Expo)
 - **Development Build**: Via Expo Go (QR code scanning)
 - **Production Build**:
   - Use **Expo EAS Build** for custom builds
@@ -781,13 +843,13 @@ This deployment plan outlines the steps and strategies to deliver and maintain t
     - **App Store Connect** (iOS)
     - **Google Play Console** (Android)
 
-#### 4.9.4 Backend Deployment (Node.js/Express)
+### 9.4 Backend Deployment (Node.js/Express)
 - **Containerization**: Dockerize the Node.js app
 - **CI/CD Pipeline**: GitHub for automated builds and deployments
 - **Hosting Options**:
   - AWS EC2
 
-#### 4.9.5 Database Setup
+### 9.5 Database Setup
 - **MongoDB**:
   - **Development**: Local MongoDB or MongoDB Atlas free tier
   - **Production**: MongoDB Atlas with backups and scaling
@@ -795,7 +857,7 @@ This deployment plan outlines the steps and strategies to deliver and maintain t
   - **Development**: Local instance or Docker
   - **Production**: Managed PostgreSQL (e.g., AWS RDS)
 
-#### 4.9.6 Single Sign-On (SSO) Integration
+### 9.6 Single Sign-On (SSO) Integration
 - **Planned Integration**:
   - Enable app access via parent app using a centralized **SSO system**
   - Likely protocols: OAuth2 / OpenID Connect
@@ -807,7 +869,7 @@ This deployment plan outlines the steps and strategies to deliver and maintain t
   - Coordination with the parent app’s team
   - Updated user/session models to support external identity providers
 
-#### 4.9.7 Rollback Strategy
+### 9.7 Rollback Strategy
 - **Frontend**: Use EAS Update rollback to revert to last stable OTA
 - **Backend**: Maintain last known working Docker image version
 - **Database**: Point-in-time recovery via backups (MongoDB Atlas / PostgreSQL RDS)
