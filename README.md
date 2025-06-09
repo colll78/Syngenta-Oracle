@@ -76,7 +76,7 @@ This section outlines the technical requirements and integration design for the 
 - **Screen Reference**
 
 1. ![AEDD Application](asset/1-aedd-application.png)  
-   *AEDD application with Oracale Satellite app deep linking *
+   *AEDD application with Oracle Satellite app deep linking*
 
 2. ![Splash Screen](asset/2-os-splash-screen.png)  
    *App splash screen*
