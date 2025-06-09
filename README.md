@@ -68,11 +68,67 @@ The system is designed to provide real-time farm metrics stored on-chain using t
 
 ### 2.1.1 Technical Specification
 This section outlines the technical requirements and integration design for the project leveraging the Cardano blockchain.
-- **UI Mockups**
-  - Provided by a dedicated design team.
-  - Will be implemented using **React Native** and **EXPO Framework**.
-  - Follows mobile-first best practices for Agent/AE/Catalyst workflows.
-> UI mockups figma link (added later)
+- **UI Mockups**: Provided by design team (Figma link to be added)
+- **Implementation**:
+  - React Native with EXPO Framework
+  - Mobile-first design for Agent/AE/Catalyst workflows
+
+- **Screen Reference**
+
+1. ![AEDD Application](asset/1-aedd-application.png)  
+   *AEDD application with Oracale Satellite app deep linking *
+
+2. ![Splash Screen](asset/2-os-splash-screen.png)  
+   *App splash screen*
+
+3. ![Field Search](asset/3-os-search-field-screen.png)  
+   *FieldView search screen*
+
+4. ![Advanced Query](asset/4-os-advanced-query.png)  
+   *Detailed search filters*
+
+5. ![Field View](asset/5-os-field-view-screen.png)  
+   *Interactive map display*
+
+6. ![Create Polygon](asset/6-os-create-polygon.png)  
+   *Boundary drawing tool*
+
+7. ![Boundary Adjustment](asset/7-adjusting-boundries.png)  
+   *Precision editing interface*
+
+8. ![Edit Polygon](asset/8-os-edit-polygon.png)  
+   *Shape modification screen*
+
+
+9. ![Save/Share](asset/9-save-share-option.png)  
+   *Data export options*
+
+10. ![Details Form](asset/10-add-more-details-form.png)  
+    *Extended metadata entry*
+
+11. ![Field Details](asset/11-field-details.png)  
+    *Field details screen*
+
+#### User Management
+12. ![Farm Overview](asset/12-adjusted-farm-screen.png)  
+    *Agricultural property dashboard*
+
+13. ![Farmer Directory](asset/13-farmers-tab.png)  
+    *Registered farmer list*
+
+14. ![Farmer Profile](asset/14-farmers-detail.png)  
+    *Individual farmer details*
+
+
+15. ![Wallet Connect](asset/15-connect-wallet.png)  
+    *Cardano wallet authentication*
+
+16. ![Wallet Management](asset/16-wallet-screen.png)  
+    *Digital asset interface*
+
+17. ![AE Profile](asset/17-ae-profile.png)  
+    *Agri Entrepreneur profile screen*
+
 - **Backend Stack**
   - Built with **Node.js** and **Express**.
   - Interacts with the Cardano blockchain using:
