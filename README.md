@@ -59,7 +59,7 @@ The solution leverages Cardano blockchain for immutable data storage, Gamma Eart
 
 ---
 
-## 2. User Interface and Backend Design
+## 2. User Interface(UI) Design
 
 #### 2.1 Core Objectives
 The system is designed to provide real-time farm metrics stored on-chain using the Cardano blockchain, enabling transparent and immutable agricultural data management for farmers, admins, and agricultural entrepreneurs (AEs).
@@ -129,41 +129,8 @@ This section outlines the technical requirements and integration design for the 
 17. ![AE Profile](asset/17-ae-profile.png)  
     *Agri Entrepreneur profile screen*
 
-- **Backend Stack**
-  - Built with **Node.js** and **Express**.
-  - Interacts with the Cardano blockchain using:
-    - **Lucid SDK**
-    - **Mesh SDK** (if needed)
-  - Responsible for:
-    - Authentication
-    - Data processing and validation
-    - Blockchain transaction management
-    - Communication with MongoDB and external APIs
-- **Blockchain Access**
-  - Utilizes **Blockfrost API** to:
-    - Fetch on-chain data
-    - Specifically target OracleDatum from a specified **smart contract address**
-  - Used for verification and visualization of blockchain-anchored metadata.
-- **Data Visualization**
-  - The mobile app decodes and renders specific OracleDatum fields:
-    - `farmArea`
-    - `ipfsHash`
-    - `arbitraryData`
-  - These fields are presented to users in readable formats using charts, cards, or text views in the React Native frontend.
-- **Development Environment**
-  - **VSCode**: Primary code editor for both backend and frontend development.
-  - **Android Emulator**: Used to run and test the React Native app during development.
-- **Deployment Flexibility**
-  - Environment-specific configurations are supported:
-    - `development`
-    - `QA`
-    - `production`
-  - Allows seamless switching of:
-    - API endpoints
-    - Blockchain network settings
-    - Feature toggles or debug flags
 
-## 3. Satellite App API Documentation
+## 3. DApp API Documentation
 
 | Task                         | Method | Path             | Request (Body / Params)                                                                                                                                                                                            | Response                                                                                                                                                                                                             |
 |------------------------------|--------|-------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -550,13 +517,11 @@ export async function getJobStatus(userId: string, jobId: string) {
 }
 
 ```
-**C. View GeoTIFF in React Native**
-> Added later
   
 ---
 
 
-## 6. Unit Testing Plan
+## 6. Testing Plan
 
 To ensure the correctness, reliability, and upgradability of the oracle system, a comprehensive unit testing strategy is defined across all smart contract components, datum structures, and integration workflows. The testing plan is divided into three primary layers: Datum validation, Script validation, and Integration tests.
 
@@ -619,7 +584,7 @@ All Plutus validator and minting policy scripts will undergo isolated scenario-b
   - Message tampering (mismatched data and signature).
 
 
-### 6.3 Application Unit Testing Plan 
+### 6.3 Application Unit Testing  
 #### 6.3.1 Backend Testing Framework
 ##### Testing Stack
 - **Framework:** Jest
@@ -672,8 +637,8 @@ describe('Cardano Integration', () => {
 });
 ```
 
-#### 4.6.2 Frontend Testing Framework
-##### Testing Stack
+### 6.2 Frontend Testing Framework
+#### Testing Stack
   - **Framework:** Jest + React Testing Library
   - **Component Testing:** @testing-library/react-native
 ##### Test Examples
@@ -700,9 +665,9 @@ describe('FarmCard Component', () => {
 ```
 ---
 
-### 6.4 Security Testing Approach
+### 7 Security Testing Approach
 
-#### 6.4.1 Backend Security Measures
+#### 7.1 Backend Security Measures
 
 - **Authentication & Authorization**
 
@@ -744,7 +709,7 @@ const validateCardanoAddress = (address) => {
 };
 
 ```
-#### 6.4.2 Security Testing Checklist
+#### 7.2 Security Testing Checklist
 
 **API Security Tests**
 - [ ] Input Validation: SQL injection, XSS, command injection
@@ -765,10 +730,9 @@ const validateCardanoAddress = (address) => {
 - [ ] Private Key Management: Secure key storage
 - [ ] Smart Contract Interaction: Parameter validation
 
----
 
-## 7. Frontend Security Measures
-### 7.1 **Secure Storage Implementation**
+### 7.3 Frontend Security Measures
+#### 7.3.1 **Secure Storage Implementation**
 ```javascript
 import * as SecureStore from 'expo-secure-store';
 
@@ -795,7 +759,7 @@ const getToken = async () => {
 };
 
 ```
-### 7.2 **Network Security**
+### 7.3.2 **Network Security**
 ```javascript
 // HTTPS enforcement
 const API_BASE_URL = __DEV__ 
