@@ -916,9 +916,7 @@ Part 1 outlines the foundational phases of the project, including:
 - Oracle system integration and blockchain component prototyping
 - Full-stack application development and UI deployment
 - Preparation for integration and pilot testing
-- **Frontend**: Use EAS Update rollback to revert to last stable OTA
-- **Backend**: Maintain last known working Docker image version
-- **Database**: Point-in-time recovery via backups (MongoDB Atlas / PostgreSQL RDS)
+
 
 Part 2 transitions into:
 - Training rollouts via Andamio Learn-to-Work Platform
