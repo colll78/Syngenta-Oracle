@@ -75,59 +75,74 @@ This section outlines the technical requirements and integration design for the 
 
 - **Screen Reference**
 
-1. ![AEDD Application](asset/1-aedd-application.png)  
-   *AEDD application with Oracle Satellite app deep linking*
+  #### AEDD application with Oracle Satellite app deep linking
+![AEDD Application](asset/1-aedd-application.png)  
+   *Figure 1: AEDD application with Oracle Satellite app deep linking*
 
-2. ![Splash Screen](asset/2-os-splash-screen.png)  
-   *App splash screen*
+  #### App splash screen
+![Splash Screen](asset/2-os-splash-screen.png)  
+   *Figure 2: App splash screen*
 
-3. ![Field Search](asset/3-os-search-field-screen.png)  
-   *FieldView search screen*
+  #### FieldView search screen
+![Field Search](asset/3-os-search-field-screen.png)  
+   *Figure 3: FieldView search screen*
 
-4. ![Advanced Query](asset/4-os-advanced-query.png)  
-   *Detailed search filters*
+  #### Detailed search filters
+![Advanced Query](asset/4-os-advanced-query.png)  
+   *Figure 4: Detailed search filters*
 
-5. ![Field View](asset/5-os-field-view-screen.png)  
-   *Interactive map display*
+  #### Interactive map display
+![Field View](asset/5-os-field-view-screen.png)  
+   *Figure 5: Interactive map display*
 
-6. ![Create Polygon](asset/6-os-create-polygon.png)  
-   *Boundary drawing tool*
+  #### Boundary drawing tool
+![Create Polygon](asset/6-os-create-polygon.png)  
+   *Figure 6: Boundary drawing tool*
 
-7. ![Boundary Adjustment](asset/7-adjusting-boundries.png)  
-   *Precision editing interface*
+  #### Precision editing interface
+![Boundary Adjustment](asset/7-adjusting-boundries.png)  
+   *Figure 7: Precision editing interface*
 
-8. ![Edit Polygon](asset/8-os-edit-polygon.png)  
-   *Shape modification screen*
+  #### Shape modification screen
+![Edit Polygon](asset/8-os-edit-polygon.png)  
+   *Figure 8: Shape modification screen*
 
+  #### Data export options
+![Save/Share](asset/9-save-share-option.png)  
+   *Figure 9: Data export options*
 
-9. ![Save/Share](asset/9-save-share-option.png)  
-   *Data export options*
-
-10. ![Details Form](asset/10-add-more-details-form.png)  
+  #### Extended metadata entry
+![Details Form](asset/10-add-more-details-form.png)  
     *Extended metadata entry*
 
-11. ![Field Details](asset/11-field-details.png)  
-    *Field details screen*
+  #### Field details screen
+![Field Details](asset/11-field-details.png)  
+    *Figure 11: Field details screen*
 
-#### User Management
-12. ![Farm Overview](asset/12-adjusted-farm-screen.png)  
-    *Agricultural property dashboard*
+### User Management
+#### Agricultural property dashboard
+![Farm Overview](asset/12-adjusted-farm-screen.png)  
+    *Figure 12: Agricultural property dashboard*
 
-13. ![Farmer Directory](asset/13-farmers-tab.png)  
-    *Registered farmer list*
+#### Registered farmer list
+![Farmer Directory](asset/13-farmers-tab.png)  
+    *Figure 13: Registered farmer list*
 
-14. ![Farmer Profile](asset/14-farmers-detail.png)  
-    *Individual farmer details*
+#### Individual farmer details
+![Farmer Profile](asset/14-farmers-detail.png)  
+    *Figure 14: Individual farmer details*
 
+#### Cardano wallet authentication (Additional Implementation-Optional)
+![Wallet Connect](asset/15-connect-wallet.png)  
+    *Figure 15: Cardano wallet authentication (Additional Implementation-Optional)*
 
-15. ![Wallet Connect](asset/15-connect-wallet.png)  
-    *Cardano wallet authentication (Additional Implementation-Optional)*
+#### Digital asset interface (Additional Implementation-Optional)
+![Wallet Management](asset/16-wallet-screen.png)  
+    *Figure 16: Digital asset interface (Additional Implementation-Optional)*
 
-16. ![Wallet Management](asset/16-wallet-screen.png)  
-    *Digital asset interface (Additional Implementation-Optional)*
-
-17. ![AE Profile](asset/17-ae-profile.png)  
-    *Agri Entrepreneur profile screen*
+#### Agri Entrepreneur profile screen
+![AE Profile](asset/17-ae-profile.png)  
+    *Figure 17: Agri Entrepreneur profile screen*
 
 
 ## 3. DApp API Documentation
