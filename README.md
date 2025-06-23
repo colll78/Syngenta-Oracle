@@ -73,76 +73,61 @@ This section outlines the technical requirements and integration design for the 
   - React Native with EXPO Framework
   - Mobile-first design for Agent/AE/Catalyst workflows
 
-### 2.3 Screen Reference
+- **Screen Reference**
 
-  #### AEDD application with Oracle Satellite app deep linking
- ![AEDD Application](asset/1-aedd-application.png)  
-   *Figure 1: AEDD application with Oracle Satellite app deep linking*
+1. ![AEDD Application](asset/1-aedd-application.png)  
+   *AEDD application with Oracle Satellite app deep linking*
 
-  #### App splash screen
- ![Splash Screen](asset/2-os-splash-screen.png)  
-   *Figure 2: App splash screen*
+2. ![Splash Screen](asset/2-os-splash-screen.png)  
+   *App splash screen*
 
-  #### FieldView search screen
- ![Field Search](asset/3-os-search-field-screen.png)  
-   *Figure 3: FieldView search screen*
+3. ![Field Search](asset/3-os-search-field-screen.png)  
+   *FieldView search screen*
 
-  #### Detailed search filters
- ![Advanced Query](asset/4-os-advanced-query.png)  
-   *Figure 4: Detailed search filters*
+4. ![Advanced Query](asset/4-os-advanced-query.png)  
+   *Detailed search filters*
 
-  #### Interactive map display
- ![Field View](asset/5-os-field-view-screen.png)  
-   *Figure 5: Interactive map display*
+5. ![Field View](asset/5-os-field-view-screen.png)  
+   *Interactive map display*
 
-  #### Boundary drawing tool
- ![Create Polygon](asset/6-os-create-polygon.png)  
-   *Figure 6: Boundary drawing tool*
+6. ![Create Polygon](asset/6-os-create-polygon.png)  
+   *Boundary drawing tool*
 
-  #### Precision editing interface
- ![Boundary Adjustment](asset/7-adjusting-boundries.png)  
-   *Figure 7: Precision editing interface*
+7. ![Boundary Adjustment](asset/7-adjusting-boundries.png)  
+   *Precision editing interface*
 
-  #### Shape modification screen
- ![Edit Polygon](asset/8-os-edit-polygon.png)  
-   *Figure 8: Shape modification screen*
+8. ![Edit Polygon](asset/8-os-edit-polygon.png)  
+   *Shape modification screen*
 
-  #### Data export options
- ![Save/Share](asset/9-save-share-option.png)  
-   *Figure 9: Data export options*
 
-  #### Extended metadata entry
- ![Details Form](asset/10-add-more-details-form.png)  
-    *Figure 10: Extended metadata entry*
+9. ![Save/Share](asset/9-save-share-option.png)  
+   *Data export options*
 
-  #### Field details screen
- ![Field Details](asset/11-field-details.png)  
-    *Figure 11: Field details screen*
+10. ![Details Form](asset/10-add-more-details-form.png)  
+    *Extended metadata entry*
 
-### 2.4 User Management
-  #### Agricultural property dashboard
- ![Farm Overview](asset/12-adjusted-farm-screen.png)  
-    *Figure 12: Agricultural property dashboard*
+11. ![Field Details](asset/11-field-details.png)  
+    *Field details screen*
 
-  #### Registered farmer list
- ![Farmer Directory](asset/13-farmers-tab.png)  
-    *Figure 13: Registered farmer list*
+#### User Management
+12. ![Farm Overview](asset/12-adjusted-farm-screen.png)  
+    *Agricultural property dashboard*
 
-  #### Individual farmer details
- ![Farmer Profile](asset/14-farmers-detail.png)  
-    *Figure 14: Individual farmer details*
+13. ![Farmer Directory](asset/13-farmers-tab.png)  
+    *Registered farmer list*
 
-  #### Cardano wallet authentication (Additional Implementation-Optional)
- ![Wallet Connect](asset/15-connect-wallet.png)  
-    *Figure 15: Cardano wallet authentication (Additional Implementation-Optional)*
+14. ![Farmer Profile](asset/14-farmers-detail.png)  
+    *Individual farmer details*
 
-  #### Digital asset interface (Additional Implementation-Optional)
- ![Wallet Management](asset/16-wallet-screen.png)  
-    *Figure 16: Digital asset interface (Additional Implementation-Optional)*
 
-  #### Agri Entrepreneur profile screen
- ![AE Profile](asset/17-ae-profile.png)  
-    *Figure 17: Agri Entrepreneur profile screen*
+15. ![Wallet Connect](asset/15-connect-wallet.png)  
+    *Cardano wallet authentication (Additional Implementation-Optional)*
+
+16. ![Wallet Management](asset/16-wallet-screen.png)  
+    *Digital asset interface (Additional Implementation-Optional)*
+
+17. ![AE Profile](asset/17-ae-profile.png)  
+    *Agri Entrepreneur profile screen*
 
 
 ## 3. DApp API Documentation
@@ -188,25 +173,24 @@ This section outlines the technical requirements and integration design for the 
 
 ### 4.3 Oracle Datum Structure
 
-<!-- The oracle datum is a critical component stored on-chain to represent farm-related data. It is designed to be lightweight, extensible, and interoperable with Cardano's Plutus smart contracts. -->
+The oracle datum is a critical component stored on-chain to represent farm-related data. It is designed to be lightweight, extensible, and interoperable with Cardano's Plutus smart contracts.
 
 **Datum Fields:**
 
-- **Farm Land Area** (`Integer`): Represents the area in square yards.
-   <!-- - Represents the area of the farm in square yards.
+1. **Farm Land Area** (`Integer`):
+   - Represents the area of the farm in square yards.
    - Stored as a 64-bit integer to accommodate large farm sizes while maintaining efficiency.- **
-   - Example: `5000` (for 5000 square yards). -->
-- **IPFS Hash for Farm Borders** (`ByteString`): Points to farm boundary file.
-   <!-- - A 46-byte IPFS hash linking to a JSON file containing geospatial coordinates (latitude/longitude points) defining the farm's boundaries.
+   - Example: `5000` (for 5000 square yards).
+2. **IPFS Hash for Farm Borders** (`ByteString`):
+   - A 46-byte IPFS hash linking to a JSON file containing geospatial coordinates (latitude/longitude points) defining the farm's boundaries.
    - Stored as a Cardano `ByteString` for compatibility with Plutus.
-   - Example: `QmXyZ123...` (IPFS CIDv0 hash). -->
-- **Arbitrary Data** (`BuiltinData`):  Flexible metadata (e.g., soil PH, crop type).
-
-   <!-- - A flexible field for additional metadata (e.g., soil health metrics, crop type, or yield predictions).
+   - Example: `QmXyZ123...` (IPFS CIDv0 hash).
+3. **Arbitrary Data** (`BuiltinData`):
+   - A flexible field for additional metadata (e.g., soil health metrics, crop type, or yield predictions).
    - Uses Cardano's `BuiltinData` type to support arbitrary Plutus-compatible data structures.
-   - Example: `{ "cropType": "rice", "soilPH": 6.5 }`. -->
+   - Example: `{ "cropType": "rice", "soilPH": 6.5 }`.
 
-**Listing 1: OracleDatum Schema**
+**Plutus Datum Schema:**
 
 ```haskell
 data OracleDatum = OracleDatum
@@ -216,7 +200,7 @@ data OracleDatum = OracleDatum
   }
 ```
 
-<!-- The oracle datum is a critical component stored on-chain to represent farm-related data. It is designed to be lightweight, extensible, and interoperable with Cardano's Plutus smart contracts. -->
+The oracle datum is a critical component stored on-chain to represent farm-related data. It is designed to be lightweight, extensible, and interoperable with Cardano's Plutus smart contracts.
 
 **Datum Fields:**
 
@@ -240,11 +224,11 @@ data CropInfo =
    }
 ```
 
-<!-- ### 4.4 Blockchain Interaction
+### 4.4 Blockchain Interaction
 
-To ensure maximum usability, the system supports two oracle architectures on Cardano: **Reference UTxO Oracle Architecture** and **Signed Message Oracle Architecture**. Each has distinct trade-offs, balancing data availability, permissionless access, and operational efficiency. -->
+To ensure maximum usability, the system supports two oracle architectures on Cardano: **Reference UTxO Oracle Architecture** and **Signed Message Oracle Architecture**. Each has distinct trade-offs, balancing data availability, permissionless access, and operational efficiency.
 
-### 4.4 Reference UTxO Oracle Architecture
+**Reference UTxO Oracle Architecture**
 
 In the reference UTxO oracle architecture, the oracle data is submitted to the chain directly as UTxOs that can be consumed as reference inputs by transactions that seek to interact with the oracle data. For our use-case, we model oracles as [CIP-68 NFTs](https://github.com/cardano-foundation/CIPs/blob/master/CIP-0068/README.md) where the CIP-68 user-token is the farm parcel/area NFT, and the corresponding CIP-68 reference-token is the UTxO with the oracle data provided for the associated farm parcel/area.  
 
@@ -269,7 +253,7 @@ farmParcelOracleProviders = [...]
   - The oracle backend server fetches satellite data (via Gamma Earth APIs) and farmer inputs (via AE dashboards).
   - At regular intervals, the backend server submits transactions to update the oracle datum with newly fetched data.
 
-### 4.5 DID NFT Minting Policy
+**DID NFT Minting Policy** 
 
 The DID NFT minting policy is a Plutus minting policy which manages the issuance of DIDs for individual farm parcels/areas. 
 
@@ -289,7 +273,7 @@ The DID NFT minting policy is a Plutus minting policy which manages the issuance
 
 This architecture guarantees the data-availability of oracle data and ensures that the data can be consumed by dApps in a permissionless manner. 
 
-### 4.6 Signed Message Oracle Architecture
+**Signed Message Oracle Architecture**
 
 The Signed Message Oracle Architecture is an alternative approach where data is not directly stored on-chain but is instead signed by a trusted oracle operator and passed into transactions that need to verify the data's authenticity. This pattern optimizes for low-cost, high-frequency data updates by minimizing on-chain footprint.
 
@@ -326,9 +310,9 @@ Smart contract protocols can consume these messages as follows:
 
 This architecture complements the Reference UTxO Oracle architecture by serving use cases that demand real-time updates or when cost sensitivity outweighs on-chain persistence.
 
-### 4.7 Integration Strategy 
-<!-- #### Oracle Data Structure
-The Cardano smart contract utilizes the following OracleDatum structure: -->
+### 4.5 Integration Strategy with PoC Oracle
+#### Oracle Data Structure
+The Cardano smart contract utilizes the following OracleDatum structure:
 ```haskell
 data OracleDatum = OracleDatum
   { farmArea :: Integer
@@ -344,8 +328,8 @@ interface OracleDatum {
   arbitraryData: any;      // Parsed JSON or raw bytes
 }
 ```
-<!-- ### 4.8 Blockchain Integration Implementation -->
-### 4.8 Blockfrost Configuration
+### 4.6 Blockchain Integration Implementation
+Blockfrost Configuration
 ```javascript
 import { Lucid, Blockfrost } from "lucid-cardano";
 
@@ -357,7 +341,7 @@ const lucid = await Lucid.new(
   "Mainnet" // or "Preprod" for testing
 );
 ```
-### 4.9 API Endpoints for Oracle Integration
+### 4.7 API Endpoints for Oracle Integration
 
 | Endpoint                      | Method | Description                         | Response                          |
 |------------------------------|--------|-------------------------------------|-----------------------------------|
@@ -482,7 +466,7 @@ in 1.1s
 2025-05-30 13:44:48 (19.7 MB/s) - 'S2L2Ax10_T34UDV-20240501-ucc1a562_IRP.tif' saved [22504275/22504275]
 ```
 
-### 5.2 Application Implementation
+##### 5.2 Application Implementation
 To interact with the `S2DR3 RISC API` in React Native and render `.tif`(GeoTIFF) satellite imagery using something like geotiff.js, we need to:
 
 **A. Submit a Job (React Native API Call)**
@@ -565,49 +549,49 @@ Unit tests will focus on serialization, schema integrity, and forward compatibil
 
 ### 6.2 Script Unit Tests
 
-<!-- All Plutus validator and minting policy scripts will undergo isolated scenario-based testing. -->
+All Plutus validator and minting policy scripts will undergo isolated scenario-based testing.
 
 **Oracle Management Validator:**
 
-**Positive Tests:**
+- **Positive Tests:**
   - Authorized oracle provider updates a datum with valid structure and preserves reference-token.
   - Continuity of UTxO validated (same asset class, correct script address).
 
-**Negative Tests:**
+- **Negative Tests:**
   - Unauthorized key attempts to spend an oracle UTxO.
   - Output datum is malformed or missing required fields.
   - Reference-token is removed, burned, or incorrectly transferred.
 
 **DID NFT Minting Policy:**
 
-**Positive Tests:**
+- **Positive Tests:**
   - Correct issuance by `issuanceOperator` with matching user and reference-token minted.
   - Oracle UTxO correctly initialized with reference-token and valid datum.
 
-**Negative Tests:**
+- **Negative Tests:**
   - Attempt to mint without operator signature.
   - Minting multiple user-tokens or reference-tokens.
   - Oracle output not created, contains structurally invalid oracle datum, or does not contain the minted reference-token.
 
 **Signed Message Validation (for consuming contracts):**
 
-**Positive Tests:**
+- **Positive Tests:**
   - Valid signature over CBOR-encoded oracle data with correct public key and valid timestamp window.
 
-**Negative Tests:**
+- **Negative Tests:**
   - Invalid signature.
   - Timestamps outside acceptable validity window.
   - Message tampering (mismatched data and signature).
 
 
 ### 6.3 Application Unit Testing  
-#### Backend 
+#### Backend Testing Framework
 ##### Testing Stack
 - **Framework:** Jest
-<!-- - **Mocking:** Jest mocks -->
+- **Mocking:** Jest mocks
 - **API Testing:** Supertest
-<!-- ##### Test Categories
-- **API Endpoint Testing** -->
+##### Test Categories
+- **API Endpoint Testing**
 ```javascript
 describe('Oracle Data API', () => {
   beforeEach(async () => {
@@ -635,7 +619,7 @@ describe('Oracle Data API', () => {
   });
 });
 ```
-**Blockchain Integration**
+- **Blockchain Integration Testing**
 ```javascript
 describe('Cardano Integration', () => {
   test('should decode OracleDatum correctly', () => {
@@ -653,11 +637,11 @@ describe('Cardano Integration', () => {
 });
 ```
 
-#### Frontend
+### 6.4 Frontend Testing Framework
 #### Testing Stack
   - **Framework:** Jest + React Testing Library
   - **Component Testing:** @testing-library/react-native
-<!-- ##### Test Examples -->
+##### Test Examples
 ```javascript
 describe('FarmCard Component', () => {
   test('renders oracle data correctly', () => {
@@ -733,22 +717,22 @@ const validateCardanoAddress = (address) => {
 - [ ] Authorization: Role-based access control
 - [ ] Rate Limiting: DDoS protection, brute force prevention
 - [ ] HTTPS: SSL/TLS configuration, certificate validation
-- CORS: Cross-origin request policies
+- [ ] CORS: Cross-origin request policies
 
 **Database Security Tests**
-- Access Control: User permissions and roles
-- Encryption: Data at rest and in transit
-- Backup Security: Encrypted backups, access logs
-- Connection Security: SSL connections, firewall rules
+- [ ] Access Control: User permissions and roles
+- [ ] Encryption: Data at rest and in transit
+- [ ] Backup Security: Encrypted backups, access logs
+- [ ] Connection Security: SSL connections, firewall rules
 
 **Blockchain Security Tests**
-- Address Validation: Proper format checking
-- Private Key Management: Secure key storage
-- Smart Contract Interaction: Parameter validation
+- [ ] Address Validation: Proper format checking
+- [ ] Private Key Management: Secure key storage
+- [ ] Smart Contract Interaction: Parameter validation
 
 
 ### 7.3 Frontend Security Measures
-#### **Secure Storage**
+#### **Secure Storage Implementation**
 ```javascript
 import * as SecureStore from 'expo-secure-store';
 
