@@ -2,9 +2,16 @@
 
 ## 1. Overview
 
-This document outlines the design and project plan for a proof-of-concept (PoC) oracle system built on the Cardano blockchain to empower smallholder farmers in India. The system integrates earth observation, farm, and market data to facilitate trusted data exchange among farmers, Agri-Entrepreneurs (AEs), buyers, and government agencies. The focus is on the data structure, blockchain interaction, component architecture, technical specifications for the oracle contract, integration strategy, unit testing plan, and scalability measurement criteria.
+<!-- This document outlines the design and project plan for a proof-of-concept (PoC) oracle system built on the Cardano blockchain to empower smallholder farmers in India. The system integrates earth observation, farm, and market data to facilitate trusted data exchange among farmers, Agri-Entrepreneurs (AEs), buyers, and government agencies. The focus is on the data structure, blockchain interaction, component architecture, technical specifications for the oracle contract, integration strategy, unit testing plan, and scalability measurement criteria.
 
-The solution leverages Cardano blockchain for immutable data storage, Gamma Earth satellite APIs for crop insights, and provides a comprehensive mobile-first experience for agricultural entrepreneurs.
+The solution leverages Cardano blockchain for immutable data storage, Gamma Earth satellite APIs for crop insights, and provides a comprehensive mobile-first experience for agricultural entrepreneurs. -->
+This document outlines the design and project plan for a proof-of-concept (PoC) oracle
+system built on the Cardano blockchain to empower smallholder farmers in India. The
+system integrates earth observation, farm, and market data to facilitate trusted data
+exchange among farmers, Agri-Entrepreneurs (AEs), buyers, and government agencies.
+
+The solution leverages the Cardano blockchain for immutable data storage, Gamma
+Earth satellite APIs for crop insights, and provides a comprehensive mobile-first experience for agricultural entrepreneurs.
 
 ### 1.1 Data Flow Architecture
 - **Authentication Flow**
@@ -41,19 +48,20 @@ The solution leverages Cardano blockchain for immutable data storage, Gamma Eart
 
 - **View Registered Farmer Data Flow**
   - Agent/AE/Catalyst requests a list of registered farmers or fields.
-  - The backend:
+  <!-- - The backend:
     - Retrieves this data directly from MongoDB.
-    - Returns it to the app for display.
+    - Returns it to the app for display. -->
+  - Backend retrieves this data directly from MongoDB and returns it to the app
   - No interaction with the blockchain is required for this operation.
 
-#### 1.1.1 Data Flow Diagram
+#### Data Flow Diagram
 
 ![DFD](./asset/DFD.png)
 
-#### 1.1.2 High Level Diagram
+#### High Level Diagram
 
 ![HLD](./asset/HLD.png)
-#### 1.1.3 Low Level Diagram
+#### Low Level Diagram
 
 ![LLD](./asset/LLD.png)
 
@@ -66,68 +74,83 @@ The system is designed to provide real-time farm metrics stored on-chain using t
 
 ---
 
-### 2.1.1 Technical Specification
+### 2.2 Technical Specification
 This section outlines the technical requirements and integration design for the project leveraging the Cardano blockchain.
-- **UI Mockups**: Provided by design team (Figma link to be added)
+- **UI Mockups**: Provided by design team.
 - **Implementation**:
   - React Native with EXPO Framework
   - Mobile-first design for Agent/AE/Catalyst workflows
 
-- **Screen Reference**
+### 2.3 Screen Reference
 
-1. ![AEDD Application](asset/1-aedd-application.png)  
-   *AEDD application with Oracle Satellite app deep linking*
+  #### AEDD application with Oracle Satellite app deep linking
+ ![AEDD Application](asset/1-aedd-application.png)  
+   *Figure 1: AEDD application with Oracle Satellite app deep linking*
 
-2. ![Splash Screen](asset/2-os-splash-screen.png)  
-   *App splash screen*
+  #### App splash screen
+ ![Splash Screen](asset/2-os-splash-screen.png)  
+   *Figure 2: App splash screen*
 
-3. ![Field Search](asset/3-os-search-field-screen.png)  
-   *FieldView search screen*
+  #### FieldView search screen
+ ![Field Search](asset/3-os-search-field-screen.png)  
+   *Figure 3: FieldView search screen*
 
-4. ![Advanced Query](asset/4-os-advanced-query.png)  
-   *Detailed search filters*
+  #### Detailed search filters
+ ![Advanced Query](asset/4-os-advanced-query.png)  
+   *Figure 4: Detailed search filters*
 
-5. ![Field View](asset/5-os-field-view-screen.png)  
-   *Interactive map display*
+  #### Interactive map display
+ ![Field View](asset/5-os-field-view-screen.png)  
+   *Figure 5: Interactive map display*
 
-6. ![Create Polygon](asset/6-os-create-polygon.png)  
-   *Boundary drawing tool*
+  #### Boundary drawing tool
+ ![Create Polygon](asset/6-os-create-polygon.png)  
+   *Figure 6: Boundary drawing tool*
 
-7. ![Boundary Adjustment](asset/7-adjusting-boundries.png)  
-   *Precision editing interface*
+  #### Precision editing interface
+ ![Boundary Adjustment](asset/7-adjusting-boundries.png)  
+   *Figure 7: Precision editing interface*
 
-8. ![Edit Polygon](asset/8-os-edit-polygon.png)  
-   *Shape modification screen*
+  #### Shape modification screen
+ ![Edit Polygon](asset/8-os-edit-polygon.png)  
+   *Figure 8: Shape modification screen*
 
+  #### Data export options
+ ![Save/Share](asset/9-save-share-option.png)  
+   *Figure 9: Data export options*
 
-9. ![Save/Share](asset/9-save-share-option.png)  
-   *Data export options*
+  #### Extended metadata entry
+ ![Details Form](asset/10-add-more-details-form.png)  
+    *Figure 10: Extended metadata entry*
 
-10. ![Details Form](asset/10-add-more-details-form.png)  
-    *Extended metadata entry*
+  #### Field details screen
+ ![Field Details](asset/11-field-details.png)  
+    *Figure 11: Field details screen*
 
-11. ![Field Details](asset/11-field-details.png)  
-    *Field details screen*
+### 2.4 User Management
+  #### Agricultural property dashboard
+ ![Farm Overview](asset/12-adjusted-farm-screen.png)  
+    *Figure 12: Agricultural property dashboard*
 
-#### User Management
-12. ![Farm Overview](asset/12-adjusted-farm-screen.png)  
-    *Agricultural property dashboard*
+  #### Registered farmer list
+ ![Farmer Directory](asset/13-farmers-tab.png)  
+    *Figure 13: Registered farmer list*
 
-13. ![Farmer Directory](asset/13-farmers-tab.png)  
-    *Registered farmer list*
+  #### Individual farmer details
+ ![Farmer Profile](asset/14-farmers-detail.png)  
+    *Figure 14: Individual farmer details*
 
-14. ![Farmer Profile](asset/14-farmers-detail.png)  
-    *Individual farmer details*
+  #### Cardano wallet authentication (Additional Implementation-Optional)
+ ![Wallet Connect](asset/15-connect-wallet.png)  
+    *Figure 15: Cardano wallet authentication (Additional Implementation-Optional)*
 
+  #### Digital asset interface (Additional Implementation-Optional)
+ ![Wallet Management](asset/16-wallet-screen.png)  
+    *Figure 16: Digital asset interface (Additional Implementation-Optional)*
 
-15. ![Wallet Connect](asset/15-connect-wallet.png)  
-    *Cardano wallet authentication*
-
-16. ![Wallet Management](asset/16-wallet-screen.png)  
-    *Digital asset interface*
-
-17. ![AE Profile](asset/17-ae-profile.png)  
-    *Agri Entrepreneur profile screen*
+  #### Agri Entrepreneur profile screen
+ ![AE Profile](asset/17-ae-profile.png)  
+    *Figure 17: Agri Entrepreneur profile screen*
 
 
 ## 3. DApp API Documentation
@@ -157,7 +180,7 @@ This section outlines the technical requirements and integration design for the 
 
 ## 4. Data Structure and Blockchain Interaction
 
-#### 4.1 Key Components
+### 4.1 Key Components
 | Component         | Technology                  | Purpose                                                  |
 |------------------|-----------------------------|----------------------------------------------------------|
 | Mobile Frontend   | React Native + Expo         | User interface for data entry and visualization         |
@@ -166,31 +189,32 @@ This section outlines the technical requirements and integration design for the 
 | Blockchain        | Cardano + Blockfrost API    | Immutable data verification and audit trail             |
 | Satellite Data    | Gamma Earth API             | Real-time crop health and NDVI analytics                |
 
-#### 4.1.1 User Ecosystem
+### 4.2 User Ecosystem
 - **Agents/AEs/Catalysts**: Register farmers and manage field data  
 - **Farmers**: Benefit from crop insights and blockchain-verified records  
 - **System Administrators**: Monitor and maintain the platform  
 
-### 4.2 Oracle Datum Structure
+### 4.3 Oracle Datum Structure
 
-The oracle datum is a critical component stored on-chain to represent farm-related data. It is designed to be lightweight, extensible, and interoperable with Cardano's Plutus smart contracts.
+<!-- The oracle datum is a critical component stored on-chain to represent farm-related data. It is designed to be lightweight, extensible, and interoperable with Cardano's Plutus smart contracts. -->
 
 **Datum Fields:**
 
-1. **Farm Land Area** (`Integer`):
-   - Represents the area of the farm in square yards.
+- **Farm Land Area** (`Integer`): Represents the area in square yards.
+   <!-- - Represents the area of the farm in square yards.
    - Stored as a 64-bit integer to accommodate large farm sizes while maintaining efficiency.- **
-   - Example: `5000` (for 5000 square yards).
-2. **IPFS Hash for Farm Borders** (`ByteString`):
-   - A 46-byte IPFS hash linking to a JSON file containing geospatial coordinates (latitude/longitude points) defining the farm's boundaries.
+   - Example: `5000` (for 5000 square yards). -->
+- **IPFS Hash for Farm Borders** (`ByteString`): Points to farm boundary file.
+   <!-- - A 46-byte IPFS hash linking to a JSON file containing geospatial coordinates (latitude/longitude points) defining the farm's boundaries.
    - Stored as a Cardano `ByteString` for compatibility with Plutus.
-   - Example: `QmXyZ123...` (IPFS CIDv0 hash).
-3. **Arbitrary Data** (`BuiltinData`):
-   - A flexible field for additional metadata (e.g., soil health metrics, crop type, or yield predictions).
-   - Uses Cardano's `BuiltinData` type to support arbitrary Plutus-compatible data structures.
-   - Example: `{ "cropType": "rice", "soilPH": 6.5 }`.
+   - Example: `QmXyZ123...` (IPFS CIDv0 hash). -->
+- **Arbitrary Data** (`BuiltinData`):  Flexible metadata (e.g., soil PH, crop type).
 
-**Plutus Datum Schema:**
+   <!-- - A flexible field for additional metadata (e.g., soil health metrics, crop type, or yield predictions).
+   - Uses Cardano's `BuiltinData` type to support arbitrary Plutus-compatible data structures.
+   - Example: `{ "cropType": "rice", "soilPH": 6.5 }`. -->
+
+**Listing 1: OracleDatum Schema**
 
 ```haskell
 data OracleDatum = OracleDatum
@@ -200,45 +224,32 @@ data OracleDatum = OracleDatum
   }
 ```
 
-The oracle datum is a critical component stored on-chain to represent farm-related data. It is designed to be lightweight, extensible, and interoperable with Cardano's Plutus smart contracts.
+<!-- The oracle datum is a critical component stored on-chain to represent farm-related data. It is designed to be lightweight, extensible, and interoperable with Cardano's Plutus smart contracts. -->
 
-**Datum Fields:**
 
-1. **Farm Land Area** (`Integer`):
-   - Represents the area of the farm in square yards, with one square yard encoded as 1,000,000 units to ensure precision, and to facilitate standard smart contract interfaces for decimal precision operations.
-   - Example: A farm of 500 square yards is represented as 500,000,000 (500 * 1,000,000).
-2. **IPFS Hash for Farm Borders** (`ByteString`):
-   - A 46-byte IPFS hash linking to a JSON file containing geospatial coordinates (latitude/longitude points) defining the farm's boundaries.
-   - Stored as a Cardano `ByteString` for compatibility with Plutus.
-   - Example: `QmXyZ123...` (IPFS CIDv0 hash).
-3. **Arbitrary Data** (`BuiltinData`):
-   - A flexible field for additional arbitrary metadata (e.g., soil health metrics, crop type, or yield predictions).
-   - Uses Cardano's `BuiltinData` type to support arbitrary Plutus-compatible data structures.
-   - Example: `{ "cropType": "rice", "soilPH": 6.5 }` would be encoded as the `BuiltinData` representation of the type:
 
+<!-- ### 4.4 Blockchain Interaction
+
+To ensure maximum usability, the system supports two oracle architectures on Cardano: **Reference UTxO Oracle Architecture** and **Signed Message Oracle Architecture**. Each has distinct trade-offs, balancing data availability, permissionless access, and operational efficiency. -->
+
+### 4.4 Reference UTxO Oracle Architecture
+- Uses CIP-68 NFTs: user-token for farm parcel, reference-token for oracle UTxO.
+- Validator ensures only authorized oracle providers can update oracle UTxOs.
 ```haskell
--- | Example arbitrary data that can be included in the oracle datum.
-data CropInfo = 
-   { cropType :: BuiltinByteString
-   , soilPH :: Rational
-   }
+issuanceOperator :: PubKeyHash
+issuanceOperator = ...
+farmParcelOracleProviders :: [ PubKeyHash ]
+farmParcelOracleProviders = [ ... ]
 ```
-
-### 4.3 Blockchain Interaction
-
-To ensure maximum usability, the system supports two oracle architectures on Cardano: **Reference UTxO Oracle Architecture** and **Signed Message Oracle Architecture**. Each has distinct trade-offs, balancing data availability, permissionless access, and operational efficiency.
-
-**Reference UTxO Oracle Architecture**
-
-In the reference UTxO oracle architecture, the oracle data is submitted to the chain directly as UTxOs that can be consumed as reference inputs by transactions that seek to interact with the oracle data. For our use-case, we model oracles as [CIP-68 NFTs](https://github.com/cardano-foundation/CIPs/blob/master/CIP-0068/README.md) where the CIP-68 user-token is the farm parcel NFT, and the corresponding CIP-68 reference-token is the UTxO with the oracle data provided for the associated farm parcel.  
+<!-- In the reference UTxO oracle architecture, the oracle data is submitted to the chain directly as UTxOs that can be consumed as reference inputs by transactions that seek to interact with the oracle data. For our use-case, we model oracles as [CIP-68 NFTs](https://github.com/cardano-foundation/CIPs/blob/master/CIP-0068/README.md) where the CIP-68 user-token is the farm parcel/area NFT, and the corresponding CIP-68 reference-token is the UTxO with the oracle data provided for the associated farm parcel/area.  
 
 There are a few key parameters for the system:
 ```haskell
--- | The public key hash of the party authorized to issue farm parcel DID NFTs.
+-- | The public key hash of the party authorized to issue farm parcel/area DID NFTs.
 issuanceOperator :: PubKeyHash 
 issuanceOperator = ...
 
--- | A list of public key hashes of parties authorized to update the oracle data associated with the farm parcels. 
+-- | A list of public key hashes of parties authorized to update the oracle data associated with the farm parcels/areas. 
 farmParcelOracleProviders :: [PubKeyHash]
 farmParcelOracleProviders = [...]
 ```
@@ -247,35 +258,40 @@ farmParcelOracleProviders = [...]
 
 - **On-Chain**:
   - The `oracleManagementValidator` is a Plutus spending validator that manages oracle data updates and access control.
-    - The lifecycle of all the CIP-68 reference-tokens are managed by this script, each oracle UTxO lives at the `oracleManagementScript` and contains a CIP-68 reference-token corresponding to the relevant farm parcel.
+    - The lifecycle of all the CIP-68 reference-tokens are managed by this script, each oracle UTxO lives at the `oracleManagementScript` and contains a CIP-68 reference-token corresponding to the relevant farm parcel/area.
   - The validation logic of this script ensures that only relevant parties (`farmParcelOracleProviders`) are able to spend the Oracle UTxOs at this script, and enforces that they must produce a continuing output which preserves the reference-tokens and produces a valid oracle datum. 
 - **Off-Chain**:
   - The oracle backend server fetches satellite data (via Gamma Earth APIs) and farmer inputs (via AE dashboards).
-  - At regular intervals, the backend server submits transactions to update the oracle datum with newly fetched data.
+  - At regular intervals, the backend server submits transactions to update the oracle datum with newly fetched data. -->
 
-**DID NFT Minting Policy** 
-
-The DID NFT minting policy is a Plutus minting policy which manages the issuance of DIDs for individual farm parcels. 
+### 4.5 DID NFT Minting Policy
+- Mints unique user-token and reference-token pair per parcel.
+- Reference-token sent to validator with valid datum.
+- Enforced by operator signature.
+<!-- 
+The DID NFT minting policy is a Plutus minting policy which manages the issuance of DIDs for individual farm parcels/areas. 
 
 - **On-Chain**:
   - The `farmParcelNFTMintingPolicy` validation logic enforces:
-    - Exactly one user-token and reference-token pair is minted per farm parcel, ensuring DID uniqueness.
+    - Exactly one user-token and reference-token pair is minted per farm parcel/area, ensuring DID uniqueness.
     - The reference-token is included in an output to the oracle management validator's script address. 
       - The initial oracle datum stored in this output is structurally valid.
     - Issuance of the DID is only possible with the authorization of the `issuanceOperator` (their signature must be present in any minting transaction).   
 - **Off-Chain**:
-  - Upon successful registration / onboarding of a new farm parcel, the backend will submit a transaction (signed by the `issuanceOperator` public key) that mints the user-token & reference-token pair corresponding to the farm parcel.
-    - The transaction includes an output UTxO with the user-token sent to the farm parcel owner's wallet.
+  - Upon successful registration / onboarding of a new farm parcel/area, the backend will submit a transaction (signed by the `issuanceOperator` public key) that mints the user-token & reference-token pair corresponding to the farm parcel/area.
+    - The transaction includes an output UTxO with the user-token sent to the farm parcel/area owner's wallet.
     - Another output UTxO with the reference-token and a valid oracle datum is sent to the oracle management validator's script address.
 - **DID NFTs**:
-  - Each CIP-68 user-token acts as a DID for an individual farm parcel, granting smallholders both ownership and control over their data.
-  - The DIDs assign verifiable identities to farm parcels.
+  - Each CIP-68 user-token acts as a DID for an individual farm parcel/area, granting smallholders both ownership and control over their data.
+  - The DIDs assign verifiable identities to farm parcels/areas.
 
-This architecture guarantees the data-availability of oracle data and ensures that the data can be consumed by dApps in a permissionless manner. 
+This architecture guarantees the data-availability of oracle data and ensures that the data can be consumed by dApps in a permissionless manner.  -->
 
-**Signed Message Oracle Architecture**
-
-The Signed Message Oracle Architecture is an alternative approach where data is not directly stored on-chain but is instead signed by a trusted oracle operator and passed into transactions that need to verify the data's authenticity. This pattern optimizes for low-cost, high-frequency data updates by minimizing on-chain footprint.
+### 4.6 Signed Message Oracle Architecture
+- Oracle backend signs CBOR-encoded oracle data.
+- Contracts verify signature, timestamps, and public key match.
+- Cost-effective, frequent updates, no on-chain state needed.
+<!-- The Signed Message Oracle Architecture is an alternative approach where data is not directly stored on-chain but is instead signed by a trusted oracle operator and passed into transactions that need to verify the data's authenticity. This pattern optimizes for low-cost, high-frequency data updates by minimizing on-chain footprint.
 
 **Key Components:**
 
@@ -295,24 +311,28 @@ Smart contract protocols can consume these messages as follows:
 - The validator verifies that:
   - The signature is valid over the provided data.
   - The signing key matches the expected oracle operator's public key.
-  - The data timestamp or nonce is within an acceptable range (to prevent stale inputs).
+  - The data timestamp or nonce is within an acceptable range (to prevent stale inputs). -->
 
 **Advantages:**
-
+- Low cost
+- Real-time updates
+- Concurrent consumption
+<!-- 
 - **Lower Oracle Operational Costs**: Since no state is stored or mutated on-chain, the oracle provider does not incur the costs of transaction fees required to publish the data to the chain periodically. 
 - **High Frequency**: Oracle data can be can be updated frequently without the constraints of onchain throughput / bandwidth.
-- **Dynamic Input**: Multiple dApps can consume the same oracle data simultaneously without regard for the potential of UTxO contention. In the reference input architecture, if an oracle datum is updated in the same block where a dApp is attempting to consume the datum, there is a potential that the dApp's transaction will fail as the oracle UTxO may already have been spent by the update transaction. 
+- **Dynamic Input**: Multiple dApps can consume the same oracle data simultaneously without regard for the potential of UTxO contention. In the reference input architecture, if an oracle datum is updated in the same block where a dApp is attempting to consume the datum, there is a potential that the dApp's transaction will fail as the oracle UTxO may already have been spent by the update transaction.  -->
 
 **Trade-offs:**
-
-- **No Native Data Availability**: Oracle data must be provided by the transaction creator; there is no guaranteed on-chain storage.
+- No native data availability
+- High off-chain responsibility
+<!-- - **No Native Data Availability**: Oracle data must be provided by the transaction creator; there is no guaranteed on-chain storage.
 - **Higher Off-Chain Responsibility**: Applications must fetch and store the oracle data themselves.
 
-This architecture complements the Reference UTxO Oracle architecture by serving use cases that demand real-time updates or when cost sensitivity outweighs on-chain persistence.
+This architecture complements the Reference UTxO Oracle architecture by serving use cases that demand real-time updates or when cost sensitivity outweighs on-chain persistence. -->
 
-### 4.4 Integration Strategy with PoC Oracle
-#### 4.4.1 Oracle Data Structure
-The Cardano smart contract utilizes the following OracleDatum structure:
+### 4.7 Integration Strategy 
+<!-- #### Oracle Data Structure
+The Cardano smart contract utilizes the following OracleDatum structure: -->
 ```haskell
 data OracleDatum = OracleDatum
   { farmArea :: Integer
@@ -320,17 +340,23 @@ data OracleDatum = OracleDatum
   , arbitraryData :: BuiltinData
   }
   ```
-Typescript Representation:
 ```typescript
 interface OracleDatum {
   farmArea: number;
-  ipfsHash: string;        // Hex or base58 encoded
-  arbitraryData: any;      // Parsed JSON or raw bytes
+  ipfsHash: string;        
+  arbitraryData: any;      
 }
 ```
-#### 4.5.2 Blockchain Integration Implementation
-Blockfrost Configuration
+<!-- ### 4.8 Blockchain Integration Implementation -->
+### 4.8 Blockfrost Configuration
 ```javascript
+import { Lucid , Blockfrost  } from "lucid -cardano" ;
+const lucid = await Lucid .new(
+new Blockfrost ( "https://cardano -mainnet.blockfrost.io/api/v0" , process . env .BLOCKFROST_API_KEY) ,
+"Mainnet"
+) 
+```
+<!-- ```javascript
 import { Lucid, Blockfrost } from "lucid-cardano";
 
 const lucid = await Lucid.new(
@@ -340,8 +366,8 @@ const lucid = await Lucid.new(
   ),
   "Mainnet" // or "Preprod" for testing
 );
-```
-#### 4.5.3 API Endpoints for Oracle Integration
+``` -->
+### 4.9 API Endpoints for Oracle Integration
 
 | Endpoint                      | Method | Description                         | Response                          |
 |------------------------------|--------|-------------------------------------|-----------------------------------|
@@ -354,51 +380,43 @@ const lucid = await Lucid.new(
 
 ## 5. Gamma Earth Satellite Integration
 ### 5.1 S2DR3 RISC API – Version 0.2
->**Important:** The API is asynchronous.
-A POST request launches the processing job and immediately returns metadata.
-The actual processed imagery appears in the corresponding GCP bucket a few minutes later.
+**Note:** The API is asynchronous. A POST request launches the job and immediately
+returns metadata. Processed imagery appears in a Google Cloud bucket a few minutes
+later.
 
 **A. Job Submission Endpoint**
+- Listing 2: Job Request Payload
 ```curl
-POST https://s2dr3-job-20250428-862134799361.europe-west1.run.app/{USER_ID}
-```
-- **Request Example:**
-```json
+POST https :// s2dr3 -job -20250428 -862134799361. europe -west1.run.
+app /{ USER_ID}
+
 {
-  "date": "2023-05-01",
-  "aoi": "19.93 49.28 20.00 49.35"  // minx, miny, maxx, maxy
+ "date ": "2023 -05 -01" ,
+ "aoi ": "19.93 49.28 20.00 49.35"
 }
 ```
 > The AOI should not exceed 150 sq.km (roughly a 12km x 12km box).
 
-- **Response Example**
+- Response Example
 ```json
 {
-  "ISO": "UA",
-  "MGRS": "35UQR",
-  "PID": "T35UQR-20230810-u8600146",
-  "aoi_overlap": "1.0",
-  "bbox": "30.85 50.39 30.88 50.42",
-  "date": "20230810",
-  "job_id": "e26bb408-d330-11ef",
-  "save_path_MS": "gs://sentinel-s2dr3/UA/T35UQR/T35UQR-u8600146/S2L2Ax10_T35UQR-u8600146-20230810_MS.tif",
-  "save_path_TCI": "gs://sentinel-s2dr3/UA/T35UQR/T35UQR-u8600146/S2L2Ax10_T35UQR-u8600146-20230810_TCI.tif"
+"ISO ": "UA",
+"MGRS ": "35 UQR",
+"PID ": "T35UQR -20230810 - u8600146",
+"aoi_overlap ": "1.0" ,
+"bbox ": "30.85 50.39 30.88 50.42" ,
+"date ": "20230810" ,
+"job_id ": "e26bb408 -d330 -11 ef",
+"save_path_MS ": "... _MS.tif",
+"save_path_TCI ": "... _TCI.tif"
 }
 
 ```
-- **Parameter Descriptions**
-
-| Field           | Description                                                                                         |
-|----------------|-----------------------------------------------------------------------------------------------------|
-| `save_path_TCI` | Download URL for the super-resolved `true-colour` dataset |
-| `save_path_MS`  | Download URL for the super-resolved `multi-spectral`
 
 **B. Check Job Status**
-  - Endpoint:
   ```curl
   GET https://s2dr3-job-20250428-862134799361.europe-west1.run.app/{USER_ID}/{job_id}
   ```
-  - Response Example:
   ```json
   {
     "PID": "T35UQR-u8600146-20230810",
@@ -407,113 +425,40 @@ POST https://s2dr3-job-20250428-862134799361.europe-west1.run.app/{USER_ID}
   }
   ```
 **C. Tile Server**
+- NDVI, TCI, and IRP overlays provided as dynamic tiles via AWS Lambda tile
+server.
+
 ```curl
-https://kgbbmarmdgv53gdb47pls2v2oe0qotcs.lambda-url.eu-central-1.on.aws/cog/
-tiles/WebMercatorQuad/{z}/{x}/{y}@2x?url=s3://sentinel-s2dr3/{MGRS}/{SID}/{P
-ID}/S2L2A_{PID}_TCI.tif
+https : / / . . . / t i l e s /WebMercatorQuad/{ z }/{x}/{y}@2x? u r l=s3 :// s e n t i n e l −s2dr3 /{MGR}
 ```
-```curl
-https://kgbbmarmdgv53gdb47pls2v2oe0qotcs.lambda-url.eu-central-1.on.aws/cog/
-tiles/WebMercatorQuad/{z}/{x}/{y}@2x?url=s3://sentinel-s2dr3/{MGRS}/{SID}/{P
-ID}/S2L2A_{PID}_NDVI.tif
-```
-```curl
-https://kgbbmarmdgv53gdb47pls2v2oe0qotcs.lambda-url.eu-central-1.on.aws/cog/
-tiles/WebMercatorQuad/{z}/{x}/{y}@2x?url=s3://sentinel-s2dr3/{MGRS}/{SID}/{P
-ID}/S2L2A_{PID}_IRP.tif
-```
-```
-PID = "T35UQR-860014671-20230810"
-MGRS = "T35UQR"
-SID = "860014671"
-```
+
 **D. Download Raw GeoTIFFs with wget**
-
-- **IRP Image Request Example:**
-```curl 
-wget https://sentinel-s2dr3.s3.eu-central-1.amazonaws.com/PL/T34UDV/T34UDV-20240501-ucc1a562/S2L2Ax10_T34UDV-20240501-ucc1a562_IRP.tif
-```
-- **Response Example:**
 ```curl
---2025-05-30 13:44:46--  https://sentinel-s2dr3.s3.eu-central-1.amazonaws.com/PL/T34UDV/T34UDV-20240501-ucc1a562/S2L2Ax10_T34UDV-20240501-ucc1a562_IRP.tif
-Resolving sentinel-s2dr3.s3.eu-central-1.amazonaws.com... connected.
-HTTP request sent, awaiting response... 200 OK
-Length: 22504275 (21M) [binary/octet-stream]
-Saving to: 'S2L2Ax10_T34UDV-20240501-ucc1a562_IRP.tif'
-
-100%[======================================>] 21.46M  19.7MB/s   in 1.1s
-
-2025-05-30 13:44:48 (19.7 MB/s) - 'S2L2Ax10_T34UDV-20240501-ucc1a562_IRP.tif' saved [22504275/22504275]
-```
-- **TCI Image Request Example:**
-```curl 
-!wget https://storage.googleapis.com/sentinel-s2dr3/PL/T34UDV/T34UDV-84632e954/S2L2Ax10_T34UDV-84632e954-20230502_TCI.tif
-```
-- **Response Example:**
-```curl
---2025-05-30 13:44:46-- https://sentinel-s2dr3.s3.eu-central-1.amazonaws.com/PL/T34UDV/T34UDV-20240501-ucc1a562/S2L2Ax10_T3
-Resolving sentinel-s2dr3.s3.eu-central-1.amazonaws.com (sentinel-s2dr3.s3.eu-central-1.amazonaws.com)... 3.5.136.188, 3.5.13
-Connecting to sentinel-s2dr3.s3.eu-central-1.amazonaws.com (sentinel-s2dr3.s3.eu-central-1.amazonaws.com)|3.5.136.188|:443..
-HTTP request sent, awaiting response... 200 OK
-Length: 22504275 (21M) [binary/octet-stream]
-Saving to: ‘S2L2Ax10_T34UDV-20240501-ucc1a562_IRP.tif’
-S2L2Ax10_T34UDV-202 100%[===================>] 21.46M 19.7MB/s
-in 1.1s
-2025-05-30 13:44:48 (19.7 MB/s) - ‘S2L2Ax10_T34UDV-20240501-ucc1a562_IRP.tif’ saved [22504275/22504275]
-
-100%[======================================>] 21.46M  19.7MB/s   in 1.1s
-
-2025-05-30 13:44:48 (19.7 MB/s) - 'S2L2Ax10_T34UDV-20240501-ucc1a562_IRP.tif' saved [22504275/22504275]
+wget https : / / . . . / S2L2Ax10_T34UDV−20240501−ucc1a562_IRP.tif 
 ```
 
-##### 5.2 Application Implementation
-To interact with the `S2DR3 RISC API` in React Native and render `.tif`(GeoTIFF) satellite imagery using something like geotiff.js, we need to:
+### 5.2 Application Implementation
+**A. Submit a Job (React Native)**
 
-**A. Submit a Job (React Native API Call)**
 ```typescript
-
-// SubmitSatelliteJob.ts
-export async function submitSatelliteJob(userId: string, date: string, aoi: string) {
-  const url = `https://s2dr3-job-20250428-862134799361.europe-west1.run.app/${userId}`;
-
-  const payload = {
-    date,
-    aoi, // format: "minx miny maxx maxy"
-  };
-
-  try {
-    const res = await fetch(url, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload),
-    });
-
-    const data = await res.json();
-    if (!res.ok) throw new Error(data.message || 'Job submission failed');
-
-    return data; // contains PID, job_id, and save paths
-  } catch (err) {
-    console.error(err);
-    throw err;
-  }
+export async function submitSatelliteJob(userId, date, aoi) {
+  const url = `https://.../${userId}`;
+  const payload = { date, aoi };
+  const res = await fetch(url, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload),
+  });
+  return await res.json();
 }
+
 ```
 **B. Poll Job Status**
 ```typescript
-export async function getJobStatus(userId: string, jobId: string) {
-  const url = `https://s2dr3-job-20250428-862134799361.europe-west1.run.app/${userId}/${jobId}`;
-
-  try {
-    const res = await fetch(url);
-    const data = await res.json();
-
-    if (!res.ok) throw new Error(data.message || 'Status check failed');
-
-    return data; // should include "State": "completed"
-  } catch (err) {
-    console.error(err);
-    throw err;
-  }
+export async function getJobStatus ( userId , jobId ) {
+const url = `https : //.../${userId}/${jobId}`;
+const res = await fetch ( url ) ;
+return await res.json ( ) ;
 }
 
 ```
@@ -522,168 +467,100 @@ export async function getJobStatus(userId: string, jobId: string) {
 
 
 ## 6. Testing Plan
-
-To ensure the correctness, reliability, and upgradability of the oracle system, a comprehensive unit testing strategy is defined across all smart contract components, datum structures, and integration workflows. The testing plan is divided into three primary layers: Datum validation, Script validation, and Integration tests.
+To ensure the correctness, reliability, and upgradability of the oracle system, a comprehensive unit testing strategy is defined across all smart contract components, datum
+structures, and integration workflows
 
 ### 6.1 Datum Integrity Tests
-
-Unit tests will focus on serialization, schema integrity, and forward compatibility of the `OracleDatum` and any embedded custom data types (e.g., `CropInfo`).
-
-**Test Cases:**
-
-- **Signed Message Structural Integrity:**
-  - Validate oracle datum message: `serialiseData oracleDatum <> integerToByteString validityStart <> integerToByteString validityEnd ≡ oracleDatumMessage` for valid `oracleDatum :: OracleDatum`.
-
-- **Precision Integrity:**
-  - Verify that farm areas represented with decimal-like scaling (e.g., `500 * 1_000_000`) maintain expected interpretation on-chain over common arithmetic operations.
-
-- **Arbitrary Data Robustness:**
-  - Fuzz test `arbitraryData` field with:
-    - Valid known schema (e.g., correct `CropInfo`)
-    - Unexpected but Plutus-compatible structures
-    - Edge cases (empty maps, deeply nested structures, large byte strings)
-
-- **Boundary Validation:**
-  - Maximum field lengths for `ipfsHash`
-  - Minimum and maximum land area edge cases (0, 1, 2^63-1)
+- **Signed Message Structural Integrity:** Validate that serialized oracle datum,
+timestamps, and concatenated data conform to the required format.
+- **Precision Integrity:** Ensure accurate arithmetic with scaled land area values
+(e.g., 500 * 1,000,000).
+- **Arbitrary Data Robustness:** Test ‘arbitraryData‘ field with various Plutuscompatible structures.
+- **Boundary Validation:** Validate minimum and maximum field lengths and land
+area values.
 
 ### 6.2 Script Unit Tests
 
-All Plutus validator and minting policy scripts will undergo isolated scenario-based testing.
+<!-- All Plutus validator and minting policy scripts will undergo isolated scenario-based testing. -->
 
 **Oracle Management Validator:**
 
-- **Positive Tests:**
-  - Authorized oracle provider updates a datum with valid structure and preserves reference-token.
-  - Continuity of UTxO validated (same asset class, correct script address).
+**Positive Tests:**
+- Authorized oracle provider updates with valid structure.
+- UTxO continuity preserved.
 
-- **Negative Tests:**
-  - Unauthorized key attempts to spend an oracle UTxO.
-  - Output datum is malformed or missing required fields.
-  - Reference-token is removed, burned, or incorrectly transferred.
+**Negative Tests:**
+- Unauthorized spending attempts.
+- Invalid or missing output datum.
+- Tampered reference-token handling.
 
 **DID NFT Minting Policy:**
 
-- **Positive Tests:**
-  - Correct issuance by `issuanceOperator` with matching user and reference-token minted.
-  - Oracle UTxO correctly initialized with reference-token and valid datum.
+**Positive Tests:**
+- Valid issuance with operator signature.
+- Proper initialization of oracle UTxO.
 
-- **Negative Tests:**
-  - Attempt to mint without operator signature.
-  - Minting multiple user-tokens or reference-tokens.
-  - Oracle output not created, contains structurally invalid oracle datum, or does not contain the minted reference-token.
+**Negative Tests:**
+- Missing signature.
+- Duplicate or malformed tokens.
+- Missing or invalid oracle output
 
-**Signed Message Validation (for consuming contracts):**
+**Signed Message Validation**
 
-- **Positive Tests:**
-  - Valid signature over CBOR-encoded oracle data with correct public key and valid timestamp window.
+**Positive Tests:**
+- Signature matches expected key.
+- Valid timestamp range.
 
-- **Negative Tests:**
+**Negative Tests:**
   - Invalid signature.
-  - Timestamps outside acceptable validity window.
-  - Message tampering (mismatched data and signature).
+  - Expired or invalid timestamps.
+  - Data mismatch.
 
 
 ### 6.3 Application Unit Testing  
-#### 6.3.1 Backend Testing Framework
-##### Testing Stack
-- **Framework:** Jest
-- **Mocking:** Jest mocks
-- **API Testing:** Supertest
-##### Test Categories
-- **API Endpoint Testing**
+
 ```javascript
+// Backend
+// Testing Stack: Jest, Supertest
 describe('Oracle Data API', () => {
-  beforeEach(async () => {
-    await setupTestDatabase();
-  });
-
-  test('GET /api/oracle/:address - valid address', async () => {
-    const mockUtxo = createMockUtxo();
-    jest.spyOn(lucid.fetcher, 'fetchUTxOs').mockResolvedValue([mockUtxo]);
-    
-    const response = await request(app)
-      .get('/api/oracle/addr_test123...')
-      .expect(200);
-    
-    expect(response.body).toHaveProperty('farmArea');
-    expect(response.body).toHaveProperty('ipfsHash');
-  });
-
-  test('GET /api/oracle/:address - invalid address', async () => {
-    const response = await request(app)
-      .get('/api/oracle/invalid-address')
-      .expect(400);
-    
-    expect(response.body.error).toBe('Invalid Cardano address');
+  test('GET /api/oracle/:address - valid', async () => {
+    const res = await request(app).get('/api/oracle/addr_test123');
+    expect(res.body).toHaveProperty('farmArea');
   });
 });
-```
-- **Blockchain Integration Testing**
-```javascript
-describe('Cardano Integration', () => {
-  test('should decode OracleDatum correctly', () => {
-    const mockDatum = 'hex_encoded_datum';
-    const decoded = parseOracleDatum(mockDatum);
-    
-    expect(decoded.farmArea).toBe(100);
-    expect(decoded.ipfsHash).toBe('QmTest123...');
-  });
 
-  test('should handle invalid datum gracefully', () => {
-    const invalidDatum = 'invalid_hex';
-    expect(() => parseOracleDatum(invalidDatum)).toThrow('Invalid datum format');
-  });
+// Blockchain Integration
+test('should decode OracleDatum', () => {
+  const decoded = parseOracleDatum('hex_data');
+  expect(decoded.farmArea).toBe(100);
 });
-```
 
-### 6.2 Frontend Testing Framework
-#### Testing Stack
-  - **Framework:** Jest + React Testing Library
-  - **Component Testing:** @testing-library/react-native
-##### Test Examples
-```javascript
-describe('FarmCard Component', () => {
-  test('renders oracle data correctly', () => {
-    const mockData = {
-      farmArea: 42,
-      ipfsHash: 'QmTest123',
-      ndvi: 0.67
-    };
-    
-    const { getByText } = render(<FarmCard data={mockData} />);
-    
-    expect(getByText('42 hectares')).toBeTruthy();
-    expect(getByText('NDVI: 0.67')).toBeTruthy();
-  });
-
-  test('handles loading state', () => {
-    const { getByTestId } = render(<FarmCard loading={true} />);
-    expect(getByTestId('loading-spinner')).toBeTruthy();
-  });
+// Frontend
+// Testing Stack: Jest, React Testing Library
+test('renders FarmCard with data', () => {
+  const { getByText } = render(<FarmCard data={{ farmArea: 42, ndvi: 0.67 }} />);
+  expect(getByText('42 hectares')).toBeTruthy();
 });
+
 ```
 ---
 
-### 7 Security Testing Approach
+## 7 Security Testing Approach
 
-#### 7.1 Backend Security Measures
+### 7.1 Backend Security Measures
 
-- **Authentication & Authorization**
-
+**Authentication & Authorization**
 ```javascript
-// JWT Implementation with security headers
-const jwt = require('jsonwebtoken');
-const rateLimit = require('express-rate-limit');
-
-// Rate limiting
-app.use('/api/', rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 100, // requests per window
-  message: 'Too many requests from this IP'
-}));
-
-// Input validation
+const jwt = require ( 'jsonwebtoken' ) ;
+const rateLimit = require ( 'express -rate -limit' ) ;
+app . use ( '/api/' , rateLimit ({
+windowMs: 15 ∗ 60 ∗ 1000 ,
+max : 100 ,
+message : 'Too many requests'
+} ) ) ;
+```
+**Input Validation**
+```javascript
 const { check, validationResult } = require('express-validator');
 
 app.post('/api/farmers', [
@@ -695,78 +572,54 @@ app.post('/api/farmers', [
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: errors.array() });
   }
-  // Process request
 });
 ```
-- **Blockchain Security**
+**Blockchain Security**
 ```javascript
-// Cardano address validation
-const validateCardanoAddress = (address) => {
-  const addressRegex = /^addr1[a-z0-9]{98}$/; // Mainnet
-  const testnetRegex = /^addr_test1[a-z0-9]{98}$/; // Testnet
-  
-  return addressRegex.test(address) || testnetRegex.test(address);
-};
-
+const validateCardanoAddress = ( address ) => {
+const mainnet = /^addr1 [ a−z0 −9]{98} $ / ;
+const testnet = /^ addr_test1 [ a−z0 −9]{98} $ / ;
+return mainnet.test ( address ) | | testnet.test ( address ) ;
+} 
 ```
-#### 7.2 Security Testing Checklist
+### 7.2 Security Testing Checklist
 
 **API Security Tests**
-- [ ] Input Validation: SQL injection, XSS, command injection
-- [ ] Authentication: JWT token validation, session management
-- [ ] Authorization: Role-based access control
-- [ ] Rate Limiting: DDoS protection, brute force prevention
-- [ ] HTTPS: SSL/TLS configuration, certificate validation
-- [ ] CORS: Cross-origin request policies
+- Input validation: SQL injection, XSS, command injection
+- JWT token validation, session management
+- Role-based access control
+- Rate limiting and DDoS protection
+- HTTPS and SSL certificate validation
+- CORS configuration
 
 **Database Security Tests**
-- [ ] Access Control: User permissions and roles
-- [ ] Encryption: Data at rest and in transit
-- [ ] Backup Security: Encrypted backups, access logs
-- [ ] Connection Security: SSL connections, firewall rules
+- Role-based access control
+- Encryption of data at rest and in transit
+- Secure backup and audit logs
+- SSL database connections and firewalls
 
 **Blockchain Security Tests**
-- [ ] Address Validation: Proper format checking
-- [ ] Private Key Management: Secure key storage
-- [ ] Smart Contract Interaction: Parameter validation
-
-
+- Cardano address validation
+- Secure private key management
+- Input validation in smart contract interfaces
 ### 7.3 Frontend Security Measures
-#### 7.3.1 **Secure Storage Implementation**
+#### **Secure Storage**
 ```javascript
 import * as SecureStore from 'expo-secure-store';
 
-// Store sensitive data
 const storeToken = async (token) => {
   await SecureStore.setItemAsync('authToken', token, {
     keychainService: 'agritech-app',
     encrypt: true
   });
 };
-
-// Retrieve with validation
-const getToken = async () => {
-  try {
-    const token = await SecureStore.getItemAsync('authToken');
-    if (token && !isTokenExpired(token)) {
-      return token;
-    }
-    return null;
-  } catch (error) {
-    console.error('Token retrieval failed:', error);
-    return null;
-  }
-};
-
 ```
-### 7.3.2 **Network Security**
+#### **Network Security**
 ```javascript
-// HTTPS enforcement
 const API_BASE_URL = __DEV__ 
   ? 'https://dev-api.agritech.com' 
   : 'https://api.agritech.com';
 
-// Certificate pinning (production)
 const secureAxios = axios.create({
   baseURL: API_BASE_URL,
   timeout: 10000,
@@ -774,65 +627,38 @@ const secureAxios = axios.create({
     'Content-Type': 'application/json'
   }
 });
-
 ```
 ---
 
 ## 8 Scalability Measurement Criteria
 ### 8.1 Performance & Memory Optimizations (React Native)
-To ensure smooth performance and efficient memory usage in the React Native mobile application, the following best practices are implemented:
+To ensure smooth performance and efficient memory usage in the React Native mobile
+application, the following best practices are implemented:
 
-- **Efficient List Rendering**
+**Efficient List Rendering**
+-  Use `FlatList` or `SectionList` for rendering large datasets.
+-  Implement `getItemLayout` for optimal scroll performance.
 
-    - Use **FlatList** or **SectionList** for scrollable data (e.g., farmers, fields).
-    - These components recycle rows for constant memory usage.
-    - Implement `getItemLayout` to avoid dynamic height calculations and improve scroll performance.
+**Hermes Engine**
+-  `Hermes` compiles JavaScript to bytecode ahead-of-time.
+- Benefits include faster app startup, lower memory usage, and reduced runtime
+overhead.
 
+**Lazy Loading**
+- Use `React.lazy()` and Suspense to defer loading of heavy components.
+- Keeps the initial bundle small to improve cold start time
 
+**Render Optimization**
 
-- **Hermes Engine**
+- Use `React.memo`, `useMemo`, `useCallback` to avoid unnecessary re-renders.
+- Favor immutable data structures to simplify change detection.
 
-    - Enable **Hermes**, the optimized JavaScript engine for React Native.
-    - Hermes compiles JavaScript into bytecode ahead-of-time.
-    - Benefits:
-        - Faster app startup
-        - Lower memory usage
-        - Reduced runtime parsing overhead
+**Image Optimization**
+- Useing `expo-image` pakage for better optimization
 
-
--  **Lazy Loading**
-
-    - Use `React.lazy()` and `Suspense` to **lazy-load heavy components**.
-    - Defer loading of large modules (e.g., map screens, chart visualizations) until needed.
-    - This keeps the **initial bundle small**, improving cold start time.
-
-
-- **Render Optimization**
-
-    - Use **React.memo**, **PureComponent**, **useMemo**, and **useCallback** to:
-    - Avoid unnecessary re-renders
-    - Cache expensive computations
-    - Ensure shallow comparison of props
-    - Prefer **immutable data structures** to simplify change detection.
-
-- **Image Optimization**
-
-    - Compress and resize images before bundling.
-    - Prefer modern formats like **WebP** where supported.
-    - Use libraries like **react-native-fast-image** for:
-    - Disk and memory caching
-    - Avoiding redundant downloads
-    - Avoid animating large images on the JS thread.
-    - Use `transform: scale` instead of changing `width/height`.
-
-- **Memory Management**
-
-    - Clean up side effects:
-        - Cancel timers, API calls, or event subscriptions in `useEffect` cleanup or `componentWillUnmount`.
-    - Avoid large, persistent in-memory caches.
-    - Use **React Native's Performance Monitor** to:
-        - Detect frame drops
-        - Identify memory spikes
+**Memory Management**
+- Clean up timers, API calls, and subscriptions in component lifecycle.
+- Monitor app with React Native’s Performance Monitor to detect frame drops and memory spikes.
 
 Together, these techniques ensure smooth UI (60 FPS) and low memory usage even as data grows. 
 
@@ -841,57 +667,76 @@ Together, these techniques ensure smooth UI (60 FPS) and low memory usage even a
 ## 9 Deployment Plan
 
 ### 9.1 Deployment Overview
-This deployment plan outlines the steps and strategies to deliver and maintain the mobile application across development, staging, and production environments. The mobile frontend is built using **React Native with Expo**, while the backend uses **Node.js with Express**. Data is managed via **MongoDB** and **PostgreSQL**. A future enhancement will enable integration with a parent app via **Single Sign-On (SSO)**.
+The deployment plan outlines the strategies to deliver and maintain the mobile application across development, staging, and production environments. The stack includes
+React Native (Expo) for the frontend and Node.js with Express for the backend. MongoDB and PostgreSQL are used for data storage.
 
 ### 9.2 Deployment Environments
 - **Development Environment**
-  - **Purpose**: Internal testing and rapid development.
-  - **Deployment**: Local Expo CLI / Expo Go + Docker-based local backend.
-  - **Access**: Developers only.
+  - Local Expo CLI and Docker-based backend
+  - Internal testing only
 - **Production Environment**
-  - **Purpose**: End-user availability.
-  - **Deployment**:
-    - **Frontend**: Expo EAS build for iOS/Android (App Store / Google Play)
-    - **Backend**: Node.js hosted on a cloud provider (e.g., AWS)
-    - **Database**: Managed services (MongoDB)
+  - Expo EAS build for Android (Google Play / Internal APK)
+  - Node.js hosted on cloud (AWS / Render)
+  - Managed MongoDB or PostgreSQL
 
 ### 9.3 Frontend Deployment (React Native + Expo)
-- **Development Build**: Via Expo Go (QR code scanning)
+- **Development Build**: Expo prebuild 
 - **Production Build**:
   - Use **Expo EAS Build** for custom builds
   - EAS Submit to deploy to:
-    - **App Store Connect** (iOS)
     - **Google Play Console** (Android)
 
 ### 9.4 Backend Deployment (Node.js/Express)
-- **Containerization**: Dockerize the Node.js app
-- **CI/CD Pipeline**: GitHub for automated builds and deployments
-- **Hosting Options**:
-  - AWS EC2
+- Docker containerization
+- CI/CD with GitHub Actions
+- Hosted on AWS EC2 or similar
 
 ### 9.5 Database Setup
-- **MongoDB**:
-  - **Development**: Local MongoDB or MongoDB Atlas free tier
-  - **Production**: MongoDB Atlas with backups and scaling
-- **PostgreSQL**:
-  - **Development**: Local instance or Docker
-  - **Production**: Managed PostgreSQL (e.g., AWS RDS)
-
+- MongoDB:
+    - Dev: local or MongoDB Atlas free tier
+    - Prod: Atlas with backup and scaling
+- PostgreSQL:
+    - Dev: Local or Docker
+    - Prod: Managed PostgreSQL (e.g., AWS RDS)
 ### 9.6 Single Sign-On (SSO) Integration
-- **Planned Integration**:
-  - Enable app access via parent app using a centralized **SSO system**
-  - Likely protocols: OAuth2 / OpenID Connect
-- **Approach**:
-  - Use parent app’s authentication provider for secure token exchange
-  - Share session/token via deep linking or secure API handshake
-  - Token validation middleware on the backend
-- **Dependency**:
-  - Coordination with the parent app’s team
-  - Updated user/session models to support external identity providers
+- OAuth2/OpenID Connect planned
+- Secure session/token sharing via API handshake or deep linking
+- Requires identity model upgrade and collaboration with parent app team
 
 ### 9.7 Rollback Strategy
-- **Frontend**: Use EAS Update rollback to revert to last stable OTA
-- **Backend**: Maintain last known working Docker image version
-- **Database**: Point-in-time recovery via backups (MongoDB Atlas / PostgreSQL RDS)
+- **Frontend**: Use EAS Update rollback 
+- **Backend**:  Use last known Docker image
+- **Database**: Point-in-time recovery (MongoDB Atlas / RDS)
 
 
+---
+
+## 10 Project Plan and Implementation Timeline
+
+The overall implementation of the Satellite Oracle and digital service infrastructure has
+been structured across multiple phases. This phased design ensures feasibility in field
+settings, continuous feedback loops with stakeholders, and a smooth progression from
+technical development to full-scale deployment.
+- To enhance clarity and readability, the Gantt chart has been divided into two parts:
+
+
+ ![Project Timeline Part 1](asset/project-timeline-part-1.png)  
+   *Figure 18: Project Timeline – Part 1: Planning, Development, and Integration*
+
+  ![Project Timeline Part 2](asset/project-timeline-part-2.png)  
+   *Figure 18: Project Timeline – Part 1: Rollout, Training, and Scaling*
+
+Part 1 outlines the foundational phases of the project, including:
+- Technical architecture and wireframe design
+- Oracle system integration and blockchain component prototyping
+- Full-stack application development and UI deployment
+- Preparation for integration and pilot testing
+
+Part 2 transitions into:
+- Training rollouts via Andamio Learn-to-Work Platform
+- Field testing and user feedback loops
+- Long-term sustainability monitoring and scaling phases
+
+This plan allows for iterative feedback from the Agri-Entrepreneurs and partner
+institutions, while de-risking the final deployment through early validation and targeted
+adjustments.
