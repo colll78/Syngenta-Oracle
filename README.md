@@ -113,7 +113,7 @@ This section outlines the technical requirements and integration design for the 
 
   #### Extended metadata entry
 ![Details Form](asset/10-add-more-details-form.png)  
-    *Extended metadata entry*
+    *Figure 10: Extended metadata entry*
 
   #### Field details screen
 ![Field Details](asset/11-field-details.png)  
@@ -344,7 +344,7 @@ interface OracleDatum {
 }
 ```
 ### 4.6 Blockchain Integration Implementation
-Blockfrost Configuration
+**Blockfrost Configuration**
 ```javascript
 import { Lucid, Blockfrost } from "lucid-cardano";
 
@@ -481,7 +481,7 @@ in 1.1s
 2025-05-30 13:44:48 (19.7 MB/s) - 'S2L2Ax10_T34UDV-20240501-ucc1a562_IRP.tif' saved [22504275/22504275]
 ```
 
-##### 5.2 Application Implementation
+### 5.2 Application Implementation
 To interact with the `S2DR3 RISC API` in React Native and render `.tif`(GeoTIFF) satellite imagery using something like geotiff.js, we need to:
 
 **A. Submit a Job (React Native API Call)**
@@ -654,7 +654,7 @@ describe('Cardano Integration', () => {
 
 ### 6.4 Frontend Testing Framework
 #### Testing Stack
-  - **Framework:** Jest + React Testing Library
+  - **Framework:** Jest + React Testing Library or E2E testing through Maestro
   - **Component Testing:** @testing-library/react-native
 ##### Test Examples
 ```javascript
@@ -680,9 +680,9 @@ describe('FarmCard Component', () => {
 ```
 ---
 
-### 7 Security Testing Approach
+## 7 Security Testing Approach
 
-#### 7.1 Backend Security Measures
+### 7.1 Backend Security Measures
 
 - **Authentication & Authorization**
 
@@ -724,7 +724,7 @@ const validateCardanoAddress = (address) => {
 };
 
 ```
-#### 7.2 Security Testing Checklist
+### 7.2 Security Testing Checklist
 
 **API Security Tests**
 - [ ] Input Validation: SQL injection, XSS, command injection
@@ -744,8 +744,6 @@ const validateCardanoAddress = (address) => {
 - [ ] Address Validation: Proper format checking
 - [ ] Private Key Management: Secure key storage
 - [ ] Smart Contract Interaction: Parameter validation
-
-
 ### 7.3 Frontend Security Measures
 #### **Secure Storage Implementation**
 ```javascript
@@ -831,15 +829,7 @@ To ensure smooth performance and efficient memory usage in the React Native mobi
     - Prefer **immutable data structures** to simplify change detection.
 
 - **Image Optimization**
-
-    - Compress and resize images before bundling.
-    - Prefer modern formats like **WebP** where supported.
-    - Use libraries like **react-native-fast-image** for:
-    - Disk and memory caching
-    - Avoiding redundant downloads
-    - Avoid animating large images on the JS thread.
-    - Use `transform: scale` instead of changing `width/height`.
-
+  - Use `expo-image` pakage for better image optimization.
 - **Memory Management**
 
     - Clean up side effects:
@@ -861,21 +851,20 @@ This deployment plan outlines the steps and strategies to deliver and maintain t
 ### 9.2 Deployment Environments
 - **Development Environment**
   - **Purpose**: Internal testing and rapid development.
-  - **Deployment**: Local Expo CLI / Expo Go + Docker-based local backend.
+  - **Deployment**: Expo Prebuild and EAS development profile build.
   - **Access**: Developers only.
 - **Production Environment**
   - **Purpose**: End-user availability.
   - **Deployment**:
-    - **Frontend**: Expo EAS build for iOS/Android (App Store / Google Play)
-    - **Backend**: Node.js hosted on a cloud provider (e.g., AWS)
+    - **Frontend**: Expo EAS build for Android (Google Play or Internal APK)
+    - **Backend**: Node.js hosted on a cloud provider (e.g., AWS or Render)
     - **Database**: Managed services (MongoDB)
 
 ### 9.3 Frontend Deployment (React Native + Expo)
-- **Development Build**: Via Expo Go (QR code scanning)
+- **Development Build**: Via Expo Go (QR code scanning) or Expo Prebuild
 - **Production Build**:
   - Use **Expo EAS Build** for custom builds
   - EAS Submit to deploy to:
-    - **App Store Connect** (iOS)
     - **Google Play Console** (Android)
 
 ### 9.4 Backend Deployment (Node.js/Express)
@@ -910,3 +899,32 @@ This deployment plan outlines the steps and strategies to deliver and maintain t
 - **Database**: Point-in-time recovery via backups (MongoDB Atlas / PostgreSQL RDS)
 
 
+## 10 Project Plan and Implementation Timeline
+
+The overall implementation of the Satellite Oracle and digital service infrastructure has been structured across multiple phases. This phased design ensures feasibility in field, settings, continuous feedback loops with stakeholders, and a smooth progression from technical development to full-scale deployment.
+- To enhance clarity and readability, the Gantt chart has been divided into two parts:
+
+
+ ![Project Timeline Part 1](asset/project-timeline-part-1.png)  
+   *Figure 18: Project Timeline – Part 1: Planning, Development, and Integration*
+
+  ![Project Timeline Part 2](asset/project-timeline-part-2.png)  
+   *Figure 18: Project Timeline – Part 1: Rollout, Training, and Scaling*
+
+Part 1 outlines the foundational phases of the project, including:
+- Technical architecture and wireframe design
+- Oracle system integration and blockchain component prototyping
+- Full-stack application development and UI deployment
+- Preparation for integration and pilot testing
+- **Frontend**: Use EAS Update rollback to revert to last stable OTA
+- **Backend**: Maintain last known working Docker image version
+- **Database**: Point-in-time recovery via backups (MongoDB Atlas / PostgreSQL RDS)
+
+Part 2 transitions into:
+- Training rollouts via Andamio Learn-to-Work Platform
+- Field testing and user feedback loops
+- Long-term sustainability monitoring and scaling phases
+
+This plan allows for iterative feedback from the Agri-Entrepreneurs and partner
+institutions, while de-risking the final deployment through early validation and targeted
+adjustments.
