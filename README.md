@@ -2,16 +2,9 @@
 
 ## 1. Overview
 
-<!-- This document outlines the design and project plan for a proof-of-concept (PoC) oracle system built on the Cardano blockchain to empower smallholder farmers in India. The system integrates earth observation, farm, and market data to facilitate trusted data exchange among farmers, Agri-Entrepreneurs (AEs), buyers, and government agencies. The focus is on the data structure, blockchain interaction, component architecture, technical specifications for the oracle contract, integration strategy, unit testing plan, and scalability measurement criteria.
+This document outlines the design and project plan for a proof-of-concept (PoC) oracle system built on the Cardano blockchain to empower smallholder farmers in India. The system integrates earth observation, farm, and market data to facilitate trusted data exchange among farmers, Agri-Entrepreneurs (AEs), buyers, and government agencies. The focus is on the data structure, blockchain interaction, component architecture, technical specifications for the oracle contract, integration strategy, unit testing plan, and scalability measurement criteria.
 
-The solution leverages Cardano blockchain for immutable data storage, Gamma Earth satellite APIs for crop insights, and provides a comprehensive mobile-first experience for agricultural entrepreneurs. -->
-This document outlines the design and project plan for a proof-of-concept (PoC) oracle
-system built on the Cardano blockchain to empower smallholder farmers in India. The
-system integrates earth observation, farm, and market data to facilitate trusted data
-exchange among farmers, Agri-Entrepreneurs (AEs), buyers, and government agencies.
-
-The solution leverages the Cardano blockchain for immutable data storage, Gamma
-Earth satellite APIs for crop insights, and provides a comprehensive mobile-first experience for agricultural entrepreneurs.
+The solution leverages Cardano blockchain for immutable data storage, Gamma Earth satellite APIs for crop insights, and provides a comprehensive mobile-first experience for agricultural entrepreneurs.
 
 ### 1.1 Data Flow Architecture
 - **Authentication Flow**
@@ -48,10 +41,9 @@ Earth satellite APIs for crop insights, and provides a comprehensive mobile-firs
 
 - **View Registered Farmer Data Flow**
   - Agent/AE/Catalyst requests a list of registered farmers or fields.
-  <!-- - The backend:
+  - The backend:
     - Retrieves this data directly from MongoDB.
-    - Returns it to the app for display. -->
-  - Backend retrieves this data directly from MongoDB and returns it to the app
+    - Returns it to the app for display.
   - No interaction with the blockchain is required for this operation.
 
 #### Data Flow Diagram
@@ -76,7 +68,7 @@ The system is designed to provide real-time farm metrics stored on-chain using t
 
 ### 2.2 Technical Specification
 This section outlines the technical requirements and integration design for the project leveraging the Cardano blockchain.
-- **UI Mockups**: Provided by design team.
+- **UI Mockups**: Provided by design team (Figma link to be added)
 - **Implementation**:
   - React Native with EXPO Framework
   - Mobile-first design for Agent/AE/Catalyst workflows
