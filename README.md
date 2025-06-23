@@ -46,14 +46,14 @@ The solution leverages Cardano blockchain for immutable data storage, Gamma Eart
     - Returns it to the app for display.
   - No interaction with the blockchain is required for this operation.
 
-#### 1.1.1 Data Flow Diagram
+#### Data Flow Diagram
 
 ![DFD](./asset/DFD.png)
 
-#### 1.1.2 High Level Diagram
+#### High Level Diagram
 
 ![HLD](./asset/HLD.png)
-#### 1.1.3 Low Level Diagram
+#### Low Level Diagram
 
 ![LLD](./asset/LLD.png)
 
@@ -66,7 +66,7 @@ The system is designed to provide real-time farm metrics stored on-chain using t
 
 ---
 
-### 2.1.1 Technical Specification
+### 2.2 Technical Specification
 This section outlines the technical requirements and integration design for the project leveraging the Cardano blockchain.
 - **UI Mockups**: Provided by design team (Figma link to be added)
 - **Implementation**:
@@ -157,7 +157,7 @@ This section outlines the technical requirements and integration design for the 
 
 ## 4. Data Structure and Blockchain Interaction
 
-#### 4.1 Key Components
+### 4.1 Key Components
 | Component         | Technology                  | Purpose                                                  |
 |------------------|-----------------------------|----------------------------------------------------------|
 | Mobile Frontend   | React Native + Expo         | User interface for data entry and visualization         |
@@ -166,12 +166,12 @@ This section outlines the technical requirements and integration design for the 
 | Blockchain        | Cardano + Blockfrost API    | Immutable data verification and audit trail             |
 | Satellite Data    | Gamma Earth API             | Real-time crop health and NDVI analytics                |
 
-#### 4.1.1 User Ecosystem
+### 4.2 User Ecosystem
 - **Agents/AEs/Catalysts**: Register farmers and manage field data  
 - **Farmers**: Benefit from crop insights and blockchain-verified records  
 - **System Administrators**: Monitor and maintain the platform  
 
-### 4.2 Oracle Datum Structure
+### 4.3 Oracle Datum Structure
 
 The oracle datum is a critical component stored on-chain to represent farm-related data. It is designed to be lightweight, extensible, and interoperable with Cardano's Plutus smart contracts.
 
@@ -224,7 +224,7 @@ data CropInfo =
    }
 ```
 
-### 4.3 Blockchain Interaction
+### 4.4 Blockchain Interaction
 
 To ensure maximum usability, the system supports two oracle architectures on Cardano: **Reference UTxO Oracle Architecture** and **Signed Message Oracle Architecture**. Each has distinct trade-offs, balancing data availability, permissionless access, and operational efficiency.
 
@@ -310,8 +310,8 @@ Smart contract protocols can consume these messages as follows:
 
 This architecture complements the Reference UTxO Oracle architecture by serving use cases that demand real-time updates or when cost sensitivity outweighs on-chain persistence.
 
-### 4.4 Integration Strategy with PoC Oracle
-#### 4.4.1 Oracle Data Structure
+### 4.5 Integration Strategy with PoC Oracle
+#### Oracle Data Structure
 The Cardano smart contract utilizes the following OracleDatum structure:
 ```haskell
 data OracleDatum = OracleDatum
@@ -328,7 +328,7 @@ interface OracleDatum {
   arbitraryData: any;      // Parsed JSON or raw bytes
 }
 ```
-#### 4.4.2 Blockchain Integration Implementation
+### 4.6 Blockchain Integration Implementation
 Blockfrost Configuration
 ```javascript
 import { Lucid, Blockfrost } from "lucid-cardano";
@@ -341,7 +341,7 @@ const lucid = await Lucid.new(
   "Mainnet" // or "Preprod" for testing
 );
 ```
-#### 4.4.3 API Endpoints for Oracle Integration
+### 4.7 API Endpoints for Oracle Integration
 
 | Endpoint                      | Method | Description                         | Response                          |
 |------------------------------|--------|-------------------------------------|-----------------------------------|
@@ -585,7 +585,7 @@ All Plutus validator and minting policy scripts will undergo isolated scenario-b
 
 
 ### 6.3 Application Unit Testing  
-#### 6.3.1 Backend Testing Framework
+#### Backend Testing Framework
 ##### Testing Stack
 - **Framework:** Jest
 - **Mocking:** Jest mocks
@@ -637,7 +637,7 @@ describe('Cardano Integration', () => {
 });
 ```
 
-### 6.2 Frontend Testing Framework
+### 6.4 Frontend Testing Framework
 #### Testing Stack
   - **Framework:** Jest + React Testing Library
   - **Component Testing:** @testing-library/react-native
@@ -732,7 +732,7 @@ const validateCardanoAddress = (address) => {
 
 
 ### 7.3 Frontend Security Measures
-#### 7.3.1 **Secure Storage Implementation**
+#### **Secure Storage Implementation**
 ```javascript
 import * as SecureStore from 'expo-secure-store';
 
@@ -759,7 +759,7 @@ const getToken = async () => {
 };
 
 ```
-### 7.3.2 **Network Security**
+#### **Network Security**
 ```javascript
 // HTTPS enforcement
 const API_BASE_URL = __DEV__ 
