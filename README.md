@@ -121,10 +121,10 @@ This section outlines the technical requirements and integration design for the 
 
 
 15. ![Wallet Connect](asset/15-connect-wallet.png)  
-    *Cardano wallet authentication (Additional Implementation-Optional)*
+    *Cardano wallet authentication*
 
 16. ![Wallet Management](asset/16-wallet-screen.png)  
-    *Digital asset interface (Additional Implementation-Optional)*
+    *Digital asset interface*
 
 17. ![AE Profile](asset/17-ae-profile.png)  
     *Agri Entrepreneur profile screen*
@@ -230,15 +230,15 @@ To ensure maximum usability, the system supports two oracle architectures on Car
 
 **Reference UTxO Oracle Architecture**
 
-In the reference UTxO oracle architecture, the oracle data is submitted to the chain directly as UTxOs that can be consumed as reference inputs by transactions that seek to interact with the oracle data. For our use-case, we model oracles as [CIP-68 NFTs](https://github.com/cardano-foundation/CIPs/blob/master/CIP-0068/README.md) where the CIP-68 user-token is the farm parcel/area NFT, and the corresponding CIP-68 reference-token is the UTxO with the oracle data provided for the associated farm parcel/area.  
+In the reference UTxO oracle architecture, the oracle data is submitted to the chain directly as UTxOs that can be consumed as reference inputs by transactions that seek to interact with the oracle data. For our use-case, we model oracles as [CIP-68 NFTs](https://github.com/cardano-foundation/CIPs/blob/master/CIP-0068/README.md) where the CIP-68 user-token is the farm parcel NFT, and the corresponding CIP-68 reference-token is the UTxO with the oracle data provided for the associated farm parcel.  
 
 There are a few key parameters for the system:
 ```haskell
--- | The public key hash of the party authorized to issue farm parcel/area DID NFTs.
+-- | The public key hash of the party authorized to issue farm parcel DID NFTs.
 issuanceOperator :: PubKeyHash 
 issuanceOperator = ...
 
--- | A list of public key hashes of parties authorized to update the oracle data associated with the farm parcels/areas. 
+-- | A list of public key hashes of parties authorized to update the oracle data associated with the farm parcels. 
 farmParcelOracleProviders :: [PubKeyHash]
 farmParcelOracleProviders = [...]
 ```
@@ -247,7 +247,7 @@ farmParcelOracleProviders = [...]
 
 - **On-Chain**:
   - The `oracleManagementValidator` is a Plutus spending validator that manages oracle data updates and access control.
-    - The lifecycle of all the CIP-68 reference-tokens are managed by this script, each oracle UTxO lives at the `oracleManagementScript` and contains a CIP-68 reference-token corresponding to the relevant farm parcel/area.
+    - The lifecycle of all the CIP-68 reference-tokens are managed by this script, each oracle UTxO lives at the `oracleManagementScript` and contains a CIP-68 reference-token corresponding to the relevant farm parcel.
   - The validation logic of this script ensures that only relevant parties (`farmParcelOracleProviders`) are able to spend the Oracle UTxOs at this script, and enforces that they must produce a continuing output which preserves the reference-tokens and produces a valid oracle datum. 
 - **Off-Chain**:
   - The oracle backend server fetches satellite data (via Gamma Earth APIs) and farmer inputs (via AE dashboards).
@@ -255,21 +255,21 @@ farmParcelOracleProviders = [...]
 
 **DID NFT Minting Policy** 
 
-The DID NFT minting policy is a Plutus minting policy which manages the issuance of DIDs for individual farm parcels/areas. 
+The DID NFT minting policy is a Plutus minting policy which manages the issuance of DIDs for individual farm parcels. 
 
 - **On-Chain**:
   - The `farmParcelNFTMintingPolicy` validation logic enforces:
-    - Exactly one user-token and reference-token pair is minted per farm parcel/area, ensuring DID uniqueness.
+    - Exactly one user-token and reference-token pair is minted per farm parcel, ensuring DID uniqueness.
     - The reference-token is included in an output to the oracle management validator's script address. 
       - The initial oracle datum stored in this output is structurally valid.
     - Issuance of the DID is only possible with the authorization of the `issuanceOperator` (their signature must be present in any minting transaction).   
 - **Off-Chain**:
-  - Upon successful registration / onboarding of a new farm parcel/area, the backend will submit a transaction (signed by the `issuanceOperator` public key) that mints the user-token & reference-token pair corresponding to the farm parcel/area.
-    - The transaction includes an output UTxO with the user-token sent to the farm parcel/area owner's wallet.
+  - Upon successful registration / onboarding of a new farm parcel, the backend will submit a transaction (signed by the `issuanceOperator` public key) that mints the user-token & reference-token pair corresponding to the farm parcel.
+    - The transaction includes an output UTxO with the user-token sent to the farm parcel owner's wallet.
     - Another output UTxO with the reference-token and a valid oracle datum is sent to the oracle management validator's script address.
 - **DID NFTs**:
-  - Each CIP-68 user-token acts as a DID for an individual farm parcel/area, granting smallholders both ownership and control over their data.
-  - The DIDs assign verifiable identities to farm parcels/areas.
+  - Each CIP-68 user-token acts as a DID for an individual farm parcel, granting smallholders both ownership and control over their data.
+  - The DIDs assign verifiable identities to farm parcels.
 
 This architecture guarantees the data-availability of oracle data and ensures that the data can be consumed by dApps in a permissionless manner. 
 
@@ -328,7 +328,7 @@ interface OracleDatum {
   arbitraryData: any;      // Parsed JSON or raw bytes
 }
 ```
-#### 4.4.2 Blockchain Integration Implementation
+#### 4.5.2 Blockchain Integration Implementation
 Blockfrost Configuration
 ```javascript
 import { Lucid, Blockfrost } from "lucid-cardano";
@@ -341,7 +341,7 @@ const lucid = await Lucid.new(
   "Mainnet" // or "Preprod" for testing
 );
 ```
-#### 4.4.3 API Endpoints for Oracle Integration
+#### 4.5.3 API Endpoints for Oracle Integration
 
 | Endpoint                      | Method | Description                         | Response                          |
 |------------------------------|--------|-------------------------------------|-----------------------------------|
